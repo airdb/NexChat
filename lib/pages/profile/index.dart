@@ -91,6 +91,9 @@ class ProfilePage extends StatelessWidget {
             icon: Icons.shopping_bag,
             iconColor: Colors.deepOrange,
             title: "Orders",
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/order');
+            },
           ),
           _buildMenuItem(
             icon: Icons.emoji_emotions,

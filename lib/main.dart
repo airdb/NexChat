@@ -4,8 +4,9 @@ import 'pages/chat/chat_screen.dart';
 import 'pages/contact/index.dart';
 import 'pages/explore/index.dart';
 import 'pages/profile/index.dart';
-import 'pages/profile/profile_settings.dart';
+import 'pages/profile/my_settings.dart';
 import 'routes/routes.dart';
+import 'pages/profile/my_order.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
         // 检查是否是 profile/settings 路由
         if (settings.name == '/profile/settings') {
           return MaterialPageRoute(
-            builder: (context) => const SettingsPage(),
+            builder: (context) => const MySettingsPage(),
           );
         }
         
@@ -70,6 +71,9 @@ class MyApp extends StatelessWidget {
         return null;
       },
       home: const MyHomePage(title: 'NexChat'),
+      routes: {
+        '/profile/order': (context) => const MyOrderPage(),
+      },
     );
   }
 }
