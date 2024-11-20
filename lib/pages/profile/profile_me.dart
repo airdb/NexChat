@@ -39,7 +39,7 @@ class ProfileMePage extends StatelessWidget {
           ),
           _buildProfileItem(
             title: '微信号',
-            trailing: const Text('DeanSA'),
+            trailing: const Text('bumu'),
           ),
           _buildProfileItem(
             title: '我的二维码',

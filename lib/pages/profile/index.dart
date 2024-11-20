@@ -48,7 +48,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'WeChat ID: DeanSA',
+                          'NexChat ID: bumu',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
