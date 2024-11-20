@@ -29,7 +29,7 @@ NexChat is a modern, next-generation chat application designed to connect people
 - WebRTC
 - Web3
 - AI (Lamda3, Qwen)
-
+- Localization
 
 ## References
 

@@ -1,0 +1,41 @@
+version: '3'
+
+vars:
+  SERVICE: NexChat
+  DATE:
+    sh: date "+%Y.%m%d.%H%M"
+  
+tasks:
+  default:
+    desc: Show help messages
+    silent: true
+    cmds:
+      - echo "Welcome to use NexChat!"
+      - echo
+      - |
+        task --list --sort=none
+
+  gen:
+    desc: Generate sdk related code (l10n)
+    cmds:
+      - flutter gen-l10n
+
+  run:
+    desc: Run Flutter app
+    cmds:
+      - flutter run
+
+  build:
+    desc: Build Flutter app
+    cmds:
+      - flutter clean
+      - flutter pub get
+      - flutter build apk --release
+      - flutter build ios --release
+      - echo "Build completed at {{.DATE}}"
+
+
+  clean:
+    desc: Clean up
+    cmds:
+      - flutter clean

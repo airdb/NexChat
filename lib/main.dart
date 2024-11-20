@@ -9,6 +9,10 @@ import 'routes/routes.dart';
 import 'pages/profile/my_order.dart';
 import 'pages/profile/my_account.dart';
 import 'pages/explore/mini_program.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'providers/locale_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,77 +23,75 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'NexChat',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (_) => LocaleProvider(),
+      child: MaterialApp(
+        title: 'NexChat',
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'), // English
+        ],
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        onGenerateRoute: (settings) {
+          print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
+          
+          // 先检查是否是 chat/detail 路由
+          if (settings.name == '/chat/detail') {
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => ChatScreen(
+                sessionId: args['sessionId'] as String,
+                contactName: args['contactName'] as String,
+                contactAvatarUrl: args['contactAvatarUrl'] as String,
+              ),
+            );
+          }
+          
+          // 检查是否是 profile/settings 路由
+          if (settings.name == '/profile/settings') {
+            return MaterialPageRoute(
+              builder: (context) => const MySettingsPage(),
+            );
+          }
+
+          // 检查是否是 profile/account 路由
+          if (settings.name == '/profile/account') {
+            return MaterialPageRoute(
+              builder: (context) => const MyAccountPage(),
+            );
+          }
+
+          // 检查是否是 explore/mini-program 路由
+          if (settings.name == '/explore/mini-program') {
+            return MaterialPageRoute(
+              builder: (context) => const MiniProgramPage(),
+            );
+          }
+          
+          // 检查是否存在于预定义路由中
+          final route = Routes.routes[settings.name];
+          if (route != null) {
+            return MaterialPageRoute(
+              builder: route,
+            );
+          }
+          
+          return null;
+        },
+        home: const MyHomePage(title: 'NexChat'),
+        routes: {
+          '/profile/order': (context) => const MyOrderPage(),
+        },
+        locale: Provider.of<LocaleProvider>(context).locale,
       ),
-      onGenerateRoute: (settings) {
-        print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
-        
-        // 先检查是否是 chat/detail 路由
-        if (settings.name == '/chat/detail') {
-          final args = settings.arguments as Map<String, dynamic>;
-          return MaterialPageRoute(
-            builder: (context) => ChatScreen(
-              sessionId: args['sessionId'] as String,
-              contactName: args['contactName'] as String,
-              contactAvatarUrl: args['contactAvatarUrl'] as String,
-            ),
-          );
-        }
-        
-        // 检查是否是 profile/settings 路由
-        if (settings.name == '/profile/settings') {
-          return MaterialPageRoute(
-            builder: (context) => const MySettingsPage(),
-          );
-        }
-
-        // 检查是否是 profile/account 路由
-        if (settings.name == '/profile/account') {
-          return MaterialPageRoute(
-            builder: (context) => const MyAccountPage(),
-          );
-        }
-
-        // 检查是否是 explore/mini-program 路由
-        if (settings.name == '/explore/mini-program') {
-          return MaterialPageRoute(
-            builder: (context) => const MiniProgramPage(),
-          );
-        }
-        
-        // 检查是否存在于预定义路由中
-        final route = Routes.routes[settings.name];
-        if (route != null) {
-          return MaterialPageRoute(
-            builder: route,
-          );
-        }
-        
-        return null;
-      },
-      home: const MyHomePage(title: 'NexChat'),
-      routes: {
-        '/profile/order': (context) => const MyOrderPage(),
-      },
     );
   }
 }
