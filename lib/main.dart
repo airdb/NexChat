@@ -112,6 +112,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
+  String _getTitle(AppLocalizations localizations) {
+    switch (_selectedIndex) {
+      case 0:
+        return localizations.appTitle;
+      case 1:
+        return localizations.tabContactsTitle;
+      case 2:
+        return localizations.tabExploreTitle;
+      case 3:
+        return localizations.tabProfileTitle;
+      default:
+        return localizations.appTitle;
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -127,7 +142,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Safer way to get localizations
     final localizations = AppLocalizations.of(context);
     if (localizations == null) {
       return const Center(child: CircularProgressIndicator());
@@ -136,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(localizations.appTitle),
+        title: Text(_getTitle(localizations)),
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -13,9 +13,10 @@
   "chatPopupQuote": "Quote",
   "chatPopupSaveFile": "Save file",
   "chatPopupSaveImage": "Save image",
-  
+
   "tabContactsTitle": "Contacts",
   "tabExploreTitle": "Explore",
+  
   "tabMiniProgramTitle": "Mini Program",
   "tabProfileTitle": "Profile",
   "tabProfileSettingsFontSizeName": "Font Size",
@@ -27,5 +28,26 @@
   "tabProfileSettingsLanguageChinese": "Chinese",
   "tabProfileSettingsLanguageEnglish": "English",
   "tabProfileSettingsThemeName": "Theme",
-  "tabProfileSettingsThemeLight": "Light"
+  "tabProfileSettingsThemeLight": "Light",
+  "tabProfileSettingsThemeDark": "Dark",
+  
+  "exploreFoodDining": "Food & Dining",
+  "exploreDrinksCafes": "Drinks & Cafes",
+  "exploreEntertainment": "Entertainment & Activities",
+  "exploreTravel": "Travel & Adventure",
+  "exploreShopping": "Shopping & Deals",
+  "exploreMeetup": "Meetup & Networking",
+  "exploreJobs": "Job & Hiring",
+  "exploreToday": "Today",
+  "exploreNearby": "Nearby",
+  "exploreMiniProgram": "Mini Program",
+  "profileIdPrefix": "NexChat ID",
+  "profileServices": "Services",
+  "profileFavorites": "Favorites",
+  "profileMoments": "Moments",
+  "profileCardsAndOffers": "Cards & Offers",
+  "profileOrders": "Orders",
+  "profileStickerGallery": "Sticker Gallery",
+  "profileAccountAndSecurity": "Account & Security",
+  "profileSettings": "Settings"
 } 

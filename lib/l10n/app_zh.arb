@@ -27,5 +27,27 @@
   "tabProfileSettingsLanguageChinese": "中文",
   "tabProfileSettingsLanguageEnglish": "English",
   "tabProfileSettingsThemeName": "主题",
-  "tabProfileSettingsThemeLight": "浅色"
+  "tabProfileSettingsThemeLight": "浅色",
+  "tabProfileSettingsThemeDark": "深色",
+
+  "exploreFoodDining": "美食",
+  "exploreDrinksCafes": "咖啡饮品",
+  "exploreEntertainment": "休闲娱乐",
+  "exploreTravel": "旅游出行",
+  "exploreShopping": "购物优惠",
+  "exploreMeetup": "社交聚会",
+  "exploreJobs": "求职招聘",
+  "exploreToday": "今日推荐",
+  "exploreNearby": "附近",
+  "exploreMiniProgram": "小程序",
+
+  "profileIdPrefix": "NexChat ID",
+  "profileServices": "服务",
+  "profileFavorites": "收藏",
+  "profileMoments": "朋友圈",
+  "profileCardsAndOffers": "卡包",
+  "profileOrders": "订单",
+  "profileStickerGallery": "表情",
+  "profileAccountAndSecurity": "账号与安全",
+  "profileSettings": "设置"
 } 

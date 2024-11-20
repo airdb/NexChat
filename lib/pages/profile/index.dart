@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nexchat/pages/profile/profile_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -48,7 +51,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'NexChat ID: bumu',
+                          l10n.profileIdPrefix + ': bumu',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -67,7 +70,7 @@ class ProfilePage extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.support_agent,
             iconColor: Colors.green,
-            title: "Services",
+            title: l10n.profileServices,
             onTap: () {
               Navigator.pushNamed(context, '/profile/service');
             },
@@ -75,22 +78,22 @@ class ProfilePage extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.collections_bookmark,
             iconColor: Colors.orange,
-            title: "Favorites",
+            title: l10n.profileFavorites,
           ),
           _buildMenuItem(
             icon: Icons.photo_library,
             iconColor: Colors.blue,
-            title: "Moments",
+            title: l10n.profileMoments,
           ),
           _buildMenuItem(
             icon: Icons.card_giftcard,
             iconColor: Colors.red,
-            title: "Cards & Offers",
+            title: l10n.profileCardsAndOffers,
           ),
           _buildMenuItem(
             icon: Icons.shopping_bag,
             iconColor: Colors.deepOrange,
-            title: "Orders",
+            title: l10n.profileOrders,
             onTap: () {
               Navigator.pushNamed(context, '/profile/order');
             },
@@ -98,13 +101,13 @@ class ProfilePage extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.emoji_emotions,
             iconColor: Colors.amber,
-            title: "Sticker Gallery",
+            title: l10n.profileStickerGallery,
           ),
           const SizedBox(height: 8),
           _buildMenuItem(
             icon: Icons.security,
             iconColor: Colors.blue,
-            title: "Account & Security",
+            title: l10n.profileAccountAndSecurity,
             onTap: () {
               Navigator.pushNamed(context, '/profile/account');
             },
@@ -112,7 +115,7 @@ class ProfilePage extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.settings,
             iconColor: Colors.grey,
-            title: "Settings",
+            title: l10n.profileSettings,
             onTap: () {
               Navigator.pushNamed(context, '/profile/settings');
             },

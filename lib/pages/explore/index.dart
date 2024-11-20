@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         // Search bar
@@ -30,7 +33,7 @@ class ExplorePage extends StatelessWidget {
                 Icon(Icons.search, size: 20, color: Colors.grey[600]),
                 const SizedBox(width: 8),
                 Text(
-                  'Explore',
+                  l10n.tabExploreTitle,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey[600],
@@ -49,42 +52,42 @@ class ExplorePage extends StatelessWidget {
                 _buildExploreItem(
                   icon: Icons.restaurant_outlined,
                   iconColor: const Color(0xFFFF6B6B),
-                  title: "Food & Dining",
+                  title: l10n.exploreFoodDining,
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.coffee_outlined,
                   iconColor: const Color(0xFF795548),
-                  title: "Drinks & Cafes",
+                  title: l10n.exploreDrinksCafes,
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.celebration_outlined,
                   iconColor: const Color(0xFFE91E63),
-                  title: "Entertainment & Activities",
+                  title: l10n.exploreEntertainment,
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.flight_outlined,
                   iconColor: const Color(0xFF2196F3),
-                  title: "Travel & Adventure",
+                  title: l10n.exploreTravel,
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.shopping_bag_outlined,
                   iconColor: const Color(0xFF4CAF50),
-                  title: "Shopping & Deals",
+                  title: l10n.exploreShopping,
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.groups_outlined,
                   iconColor: const Color(0xFF9C27B0),
-                  title: "Meetup & Networking",
+                  title: l10n.exploreMeetup,
                 ),
                 _buildExploreItem(
                   icon: Icons.work_outline,
                   iconColor: const Color(0xFF607D8B),
-                  title: "Job & Hiring",
+                  title: l10n.exploreJobs,
                 ),
                 Container(
                   height: 8,
@@ -93,13 +96,13 @@ class ExplorePage extends StatelessWidget {
                 _buildExploreItem(
                   icon: Icons.calendar_today_outlined,
                   iconColor: const Color(0xFFFF9800),
-                  title: "Today",
+                  title: l10n.exploreToday,
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.location_on_outlined,
                   iconColor: const Color(0xFF1878F3),
-                  title: "Nearby",
+                  title: l10n.exploreNearby,
                 ),
                 Container(
                   height: 8,
@@ -108,7 +111,7 @@ class ExplorePage extends StatelessWidget {
                 _buildExploreItem(
                   icon: Icons.apps_outlined,
                   iconColor: const Color(0xFF8B44FF),
-                  title: "Mini Program",
+                  title: l10n.exploreMiniProgram,
                   onTap: () {
                     Navigator.pushNamed(context, '/explore/mini-program');
                   },
