@@ -23,6 +23,7 @@ tasks:
   run:
     desc: Run Flutter app
     cmds:
+      - flutter gen-l10n
       - flutter run
 
   build:

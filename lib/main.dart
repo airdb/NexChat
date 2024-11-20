@@ -15,7 +15,12 @@ import 'package:provider/provider.dart';
 import 'providers/locale_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => LocaleProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,75 +28,70 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => LocaleProvider(),
-      child: MaterialApp(
-        title: 'NexChat',
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'), // English
-        ],
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        onGenerateRoute: (settings) {
-          print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
-          
-          // 先检查是否是 chat/detail 路由
-          if (settings.name == '/chat/detail') {
-            final args = settings.arguments as Map<String, dynamic>;
-            return MaterialPageRoute(
-              builder: (context) => ChatScreen(
-                sessionId: args['sessionId'] as String,
-                contactName: args['contactName'] as String,
-                contactAvatarUrl: args['contactAvatarUrl'] as String,
-              ),
-            );
-          }
-          
-          // 检查是否是 profile/settings 路由
-          if (settings.name == '/profile/settings') {
-            return MaterialPageRoute(
-              builder: (context) => const MySettingsPage(),
-            );
-          }
-
-          // 检查是否是 profile/account 路由
-          if (settings.name == '/profile/account') {
-            return MaterialPageRoute(
-              builder: (context) => const MyAccountPage(),
-            );
-          }
-
-          // 检查是否是 explore/mini-program 路由
-          if (settings.name == '/explore/mini-program') {
-            return MaterialPageRoute(
-              builder: (context) => const MiniProgramPage(),
-            );
-          }
-          
-          // 检查是否存在于预定义路由中
-          final route = Routes.routes[settings.name];
-          if (route != null) {
-            return MaterialPageRoute(
-              builder: route,
-            );
-          }
-          
-          return null;
-        },
-        home: const MyHomePage(title: 'NexChat'),
-        routes: {
-          '/profile/order': (context) => const MyOrderPage(),
-        },
-        locale: Provider.of<LocaleProvider>(context).locale,
+    return MaterialApp(
+      title: 'NexChat',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
+      onGenerateRoute: (settings) {
+        print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
+        
+        // 先检查是否是 chat/detail 路由
+        if (settings.name == '/chat/detail') {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              sessionId: args['sessionId'] as String,
+              contactName: args['contactName'] as String,
+              contactAvatarUrl: args['contactAvatarUrl'] as String,
+            ),
+          );
+        }
+        
+        // 检查是否是 profile/settings 路由
+        if (settings.name == '/profile/settings') {
+          return MaterialPageRoute(
+            builder: (context) => const MySettingsPage(),
+          );
+        }
+
+        // 检查是否是 profile/account 路由
+        if (settings.name == '/profile/account') {
+          return MaterialPageRoute(
+            builder: (context) => const MyAccountPage(),
+          );
+        }
+
+        // 检查是否是 explore/mini-program 路由
+        if (settings.name == '/explore/mini-program') {
+          return MaterialPageRoute(
+            builder: (context) => const MiniProgramPage(),
+          );
+        }
+        
+        // 检查是否存在于预定义路由中
+        final route = Routes.routes[settings.name];
+        if (route != null) {
+          return MaterialPageRoute(
+            builder: route,
+          );
+        }
+        
+        return null;
+      },
+      home: const MyHomePage(title: 'NexChat'),
+      routes: {
+        '/profile/order': (context) => const MyOrderPage(),
+      },
+      locale: Provider.of<LocaleProvider>(context).locale,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
@@ -115,6 +115,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Locale _locale = Locale('en'); // default locale.
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -132,10 +134,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('NexChat'),
+        title: Text(localizations!.appTitle),
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

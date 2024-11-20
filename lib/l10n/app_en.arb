@@ -1,9 +1,21 @@
 {
   "appTitle": "NexChat",
-  "explore": "Explore",
-  "miniProgram": "Mini Program",
-  "settings": "Settings",
-  "profile": "Profile",
-  "chat": "Chat",
-  "contacts": "Contacts"
+  "appLanguage": "English",
+  
+  "tabChatTitle": "Chat",
+  "chatPopupSearch": "Search",
+  "chatPopupTranslate": "Translate",
+  "chatPopupDelete": "Delete",
+  "chatPopupSelectMore": "Select more",
+  "chatPopupCopy": "Copy",
+  "chatPopupForward": "Forward",
+  "chatPopupRemind": "Remind",
+  "chatPopupQuote": "Quote",
+  "chatPopupSaveFile": "Save file",
+  "chatPopupSaveImage": "Save image",
+  
+  "tabContactsTitle": "Contacts",
+  "tabExploreTitle": "Explore",
+  "tabMiniProgramTitle": "Mini Program",
+  "tabProfileTitle": "Profile"
 } 

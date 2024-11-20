@@ -1,9 +1,21 @@
 {
-  "appTitle": "聊天",
-  "explore": "发现",
-  "miniProgram": "小程序",
-  "settings": "设置",
-  "profile": "我的",
-  "chat": "聊天",
-  "contacts": "通讯录"
+  "appTitle": "NexChat",
+  "appLanguage": "中文",
+
+  "tabChatTitle": "聊天",
+  "chatPopupSearch": "搜索",
+  "chatPopupTranslate": "翻译",
+  "chatPopupDelete": "删除",
+  "chatPopupSelectMore": "多选",
+  "chatPopupCopy": "复制",
+  "chatPopupForward": "转发",
+  "chatPopupRemind": "提醒",
+  "chatPopupQuote": "引用",
+  "chatPopupSaveFile": "保存文件",
+  "chatPopupSaveImage": "保存图片",
+  
+  "tabContactsTitle": "通讯录",
+  "tabExploreTitle": "发现",
+  "tabMiniProgramTitle": "小程序",
+  "tabProfileTitle": "我的"
 } 
