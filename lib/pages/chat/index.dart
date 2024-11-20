@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+export 'chat_screen.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -72,7 +73,7 @@ class ChatPage extends StatelessWidget {
               '/chat/detail',
               arguments: {
                 'contactName': chat.name,
-                'contactAvatarUrl': "",
+                'contactAvatarUrl': chat.avatarUrl,
               },
             );
           },
