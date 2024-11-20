@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   final String contactName;
   final String contactAvatarUrl;
   final String sessionId;
@@ -13,6 +13,35 @@ class ChatScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final List<ChatMessage> _messages = messages;
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void _sendMessage() {
+    if (_messageController.text.trim().isEmpty) return;
+
+    setState(() {
+      _messages.add(
+        ChatMessage(
+          content: _messageController.text,
+          isMe: true,
+          timestamp: DateTime.now(),
+        ),
+      );
+    });
+    _messageController.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -21,7 +50,7 @@ class ChatScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          contactName,
+          widget.contactName,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -34,12 +63,12 @@ class ChatScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: messages.length,
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
-                final message = messages[index];
+                final message = _messages[index];
                 return ChatMessageWidget(
                   message: message,
-                  contactAvatarUrl: contactAvatarUrl,
+                  contactAvatarUrl: widget.contactAvatarUrl,
                 );
               },
             ),
@@ -73,6 +102,7 @@ class ChatScreen extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: TextField(
+              controller: _messageController,
               decoration: InputDecoration(
                 hintText: 'Send a message...',
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -85,14 +115,13 @@ class ChatScreen extends StatelessWidget {
               ),
               minLines: 1,
               maxLines: 4,
+              onSubmitted: (_) => _sendMessage(),
             ),
           ),
           const SizedBox(width: 12),
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {
-              // TODO: implement send message
-            },
+            onPressed: _sendMessage,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(
               minWidth: 32,
