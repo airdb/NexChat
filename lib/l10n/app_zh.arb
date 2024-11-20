@@ -49,5 +49,18 @@
   "profileOrders": "订单",
   "profileStickerGallery": "表情",
   "profileAccountAndSecurity": "账号与安全",
-  "profileSettings": "设置"
+  "profileSettings": "设置",
+
+  "contactSearch": "搜索",
+  "contactNewFriends": "新的朋友",
+  "contactGroupChats": "群聊",
+  "contactTags": "标签",
+  "contactOfficialAccounts": "个人公众号",
+  "contactGovernmentAccount": "政务号",
+  "contactBusinessContacts": "企业号",
+  "contactCompanyOrShop": "公司或商铺",
+  "contactCompany": "公司",
+  "contactShop": "商铺",
+  "contactStore": "店铺",
+  "contactMerchant": "商家"
 } 

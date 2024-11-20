@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -16,7 +19,7 @@ class ContactPage extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search',
+                  hintText: l10n.contactSearch,
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(6),
@@ -31,54 +34,58 @@ class ContactPage extends StatelessWidget {
             // Contact list
             Expanded(
               child: ListView(
-                children: const [
+                children: [
                   ContactListItem(
                     icon: Icons.person_add_outlined,
                     color: Colors.orange,
-                    title: "New Friends",
+                    title: l10n.contactNewFriends,
                   ),
                   ContactListItem(
                     icon: Icons.group_outlined,
                     color: Colors.orange,
-                    title: "Group Chats",
+                    title: l10n.contactGroupChats,
                   ),
                   ContactListItem(
                     icon: Icons.star_outline,
                     color: Colors.blue,
-                    title: "Tags",
+                    title: l10n.contactTags,
                   ),
                   ContactListItem(
                     icon: Icons.campaign_outlined,
                     color: Colors.blue,
-                    title: "Official Accounts",
+                    title: l10n.contactOfficialAccounts,
                   ),
                   ContactListItem(
                     icon: Icons.account_balance_outlined,
                     color: Colors.blue,
-                    title: "Government Account",
+                    title: l10n.contactGovernmentAccount,
                   ),
                   ContactListItem(
                     icon: Icons.business_center_outlined,
                     color: Colors.blue,
-                    title: "Business Contacts",
+                    title: l10n.contactBusinessContacts,
                   ),
-                  GroupTitle(title: "Company Or Shop"),
+                  GroupTitle(title: l10n.contactCompanyOrShop),
                   ContactListItem(
                     icon: Icons.apartment_outlined,
                     color: Colors.lightBlue,
-                    title: "Company",
+                    title: l10n.contactCompany,
                   ),
                   ContactListItem(
                     icon: Icons.shopping_bag_outlined,
                     color: Colors.purple,
-                    title: "Shop",
+                    title: l10n.contactShop,
                   ),
                   ContactListItem(
                     icon: Icons.store_outlined,
                     color: Colors.red,
-                    title: "Store",
+                    title: l10n.contactStore,
                   ),
-
+                  ContactListItem(
+                    icon: Icons.shopping_cart_outlined,
+                    color: Colors.red,
+                    title: l10n.contactMerchant,
+                  ),
                 ],
               ),
             ),

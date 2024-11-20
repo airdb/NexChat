@@ -49,5 +49,17 @@
   "profileOrders": "Orders",
   "profileStickerGallery": "Sticker Gallery",
   "profileAccountAndSecurity": "Account & Security",
-  "profileSettings": "Settings"
+  "profileSettings": "Settings",
+  "contactSearch": "Search",
+  "contactNewFriends": "New Friends",
+  "contactGroupChats": "Group Chats",
+  "contactTags": "Tags",
+  "contactOfficialAccounts": "Individual Official Accounts",
+  "contactGovernmentAccount": "Government Account",
+  "contactBusinessContacts": "Business Contacts",
+  "contactCompanyOrShop": "Company Or Shop",
+  "contactCompany": "Company",
+  "contactShop": "Shop",
+  "contactStore": "Store",
+  "contactMerchant": "Merchant"
 } 
