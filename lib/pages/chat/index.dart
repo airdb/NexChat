@@ -70,6 +70,7 @@ class ChatPage extends StatelessWidget {
             final args = {
               'contactName': chat.name,
               'contactAvatarUrl': chat.avatarUrl,
+              'sessionId': chat.sessionId,
             };
             print('Debug: Sending arguments from ChatPage: $args');
             Navigator.pushNamed(
@@ -89,12 +90,15 @@ class ChatItemData {
   final String message;
   final String time;
   final String avatarUrl;
+  final String sessionId;
 
   ChatItemData({
     required this.name,
     required this.message,
     required this.time,
-  }) : avatarUrl = generateAvatarUrl(name);
+    String? sessionId,
+  }) : avatarUrl = generateAvatarUrl(name),
+       sessionId = sessionId ?? name.toLowerCase().replaceAll(' ', '_');
 
   static String generateAvatarUrl(String name) {
     return 'https://source.boringavatars.com/beam/120/$name?colors=264653,2a9d8f,e9c46a,f4a261,e76f51';

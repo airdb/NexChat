@@ -1,0 +1,40 @@
+.send-message-container {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    gap: 12px;
+    /* 控件之间的间距 */
+}
+
+.message-input {
+    flex: 1;
+    /* 输入框占据剩余空间 */
+    min-height: 36px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    border: 1px solid #e0e0e0;
+    background: #f5f5f5;
+}
+
+.emoji-btn,
+.send-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.send-btn {
+    color: #1677ff;
+}

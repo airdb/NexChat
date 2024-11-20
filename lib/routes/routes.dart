@@ -19,6 +19,7 @@ class Routes {
       return ChatScreen(
         contactName: args['contactName'] as String,
         contactAvatarUrl: args['contactAvatarUrl'] as String,
+        sessionId: args['sessionId'] as String,
       );
     },
   };

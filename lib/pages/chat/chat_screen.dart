@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ChatScreen extends StatelessWidget {
   final String contactName;
   final String contactAvatarUrl;
+  final String sessionId;
 
   const ChatScreen({
     Key? key,
     required this.contactName,
     required this.contactAvatarUrl,
+    required this.sessionId,
   }) : super(key: key);
 
   @override
@@ -50,30 +52,53 @@ class ChatScreen extends StatelessWidget {
 
   Widget _buildMessageInput() {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200)),
+        border: Border(top: BorderSide(color: Colors.grey.shade100)),
       ),
       child: Row(
         children: [
+          IconButton(
+            icon: const Icon(Icons.emoji_emotions_outlined),
+            onPressed: () {
+              // TODO: implement emoji picker
+            },
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(
+              minWidth: 32,
+              minHeight: 32,
+            ),
+          ),
+          const SizedBox(width: 12),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                hintText: '发送消息...',
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                hintText: 'Send a message...',
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
                 ),
+                fillColor: Colors.grey.shade50,
+                filled: true,
               ),
+              minLines: 1,
+              maxLines: 4,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
           IconButton(
             icon: const Icon(Icons.send),
             onPressed: () {
-              // TODO: 实现发送消息功能
+              // TODO: implement send message
             },
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(
+              minWidth: 32,
+              minHeight: 32,
+            ),
+            color: const Color(0xFF1677ff), // 使用CSS中定义的蓝色
           ),
         ],
       ),
@@ -147,36 +172,36 @@ class ChatMessageWidget extends StatelessWidget {
   }
 }
 
-// 示例消息数据
+// Sample message data
 final List<ChatMessage> messages = [
   ChatMessage(
-    content: '你好',
+    content: "Hey, I've been thinking about personal growth lately. Any advice?",
     isMe: false,
     timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
   ),
   ChatMessage(
-    content: '你好啊！',
+    content: "Actually, I've found that continuous learning and setting clear goals has helped me a lot",
     isMe: true,
     timestamp: DateTime.now().subtract(const Duration(minutes: 4)),
   ),
   ChatMessage(
-    content: '最近在忙什么呢？',
+    content: "That makes sense. What about financial growth? How do you manage that?",
     isMe: false,
     timestamp: DateTime.now().subtract(const Duration(minutes: 3)),
   ),
   ChatMessage(
-    content: '在写一个Flutter项目，你呢？',
+    content: "I focus on multiple income streams. Besides my main job, I'm learning to invest and doing some freelance work",
     isMe: true, 
     timestamp: DateTime.now().subtract(const Duration(minutes: 2)),
   ),
   ChatMessage(
-    content: '我也在学Flutter！有什么好的学习资源推荐吗？',
+    content: "Interesting! What kind of freelance work do you do?",
     isMe: false,
     timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
   ),
   ChatMessage(
-    content: '官方文档写得很详细，我觉得是最好的入门资料。另外B站上也有很多优质教程。',
+    content: "I do mobile app development. The tech industry pays well, and there's always demand. Plus, you can work remotely for clients worldwide.",
     isMe: true,
     timestamp: DateTime.now(),
   )
-]; 
+];
