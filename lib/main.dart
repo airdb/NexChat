@@ -8,6 +8,7 @@ import 'pages/profile/my_settings.dart';
 import 'routes/routes.dart';
 import 'pages/profile/my_order.dart';
 import 'pages/profile/my_account.dart';
+import 'pages/explore/mini_program.dart';
 
 void main() {
   runApp(const MyApp());
@@ -65,6 +66,13 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/profile/account') {
           return MaterialPageRoute(
             builder: (context) => const MyAccountPage(),
+          );
+        }
+
+        // 检查是否是 explore/mini-program 路由
+        if (settings.name == '/explore/mini-program') {
+          return MaterialPageRoute(
+            builder: (context) => const MiniProgramPage(),
           );
         }
         

@@ -9,7 +9,7 @@ import '../pages/profile/my_profile.dart';
 import '../pages/profile/my_settings.dart';
 import '../pages/profile/my_order.dart';
 import '../pages/profile/my_account.dart';
-
+import '../pages/explore/mini_program.dart';
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
     '/chat': (context) => const ChatPage(),
@@ -21,6 +21,7 @@ class Routes {
     '/profile/settings': (context) => const MySettingsPage(),
     '/profile/account': (context) => const MyAccountPage(),
     '/profile/order': (context) => const MyOrderPage(),
+    '/explore/mini-program': (context) => const MiniProgramPage(),
     '/chat/detail': (context) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       print('Debug: Arguments received in route builder: $args');

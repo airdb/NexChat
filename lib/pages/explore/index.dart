@@ -109,6 +109,9 @@ class ExplorePage extends StatelessWidget {
                   icon: Icons.apps_outlined,
                   iconColor: const Color(0xFF8B44FF),
                   title: "Mini Program",
+                  onTap: () {
+                    Navigator.pushNamed(context, '/explore/mini-program');
+                  },
                 ),
                 const Divider(height: 1, indent: 56),
 
@@ -124,10 +127,12 @@ class ExplorePage extends StatelessWidget {
     required IconData icon,
     required Color iconColor,
     required String title,
+    VoidCallback? onTap,
   }) {
     return Container(
       color: Colors.white,
       child: ListTile(
+        onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         leading: Container(
           width: 36,
