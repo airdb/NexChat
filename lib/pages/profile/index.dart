@@ -97,12 +97,6 @@ class ProfilePage extends StatelessWidget {
             iconColor: Colors.grey,
             title: "Settings",
           ),
-          _buildMenuItem(
-            icon: Icons.miscellaneous_services,
-            iconColor: Colors.green,
-            title: "服务",
-            onTap: () => Navigator.pushNamed(context, '/profile/service'),
-          ),
         ],
       ),
     );

@@ -13,12 +13,33 @@ class ChatPage extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final chat = _chatItems[index];
+        print('Avatar URL for ${chat.name}: ${chat.avatarUrl}');
+
         return ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.grey[300],
-            child: const Icon(Icons.person, color: Colors.white),
+          leading: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey[300],
+            ),
+            child: ClipOval(
+              child: Image.network(
+                chat.avatarUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: Icon(Icons.person, color: Colors.white),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  print('Error loading avatar: $error');
+                  return Icon(Icons.person, color: Colors.white);
+                },
+              ),
+            ),
           ),
           title: Padding(
             padding: const EdgeInsets.only(bottom: 4),
@@ -54,12 +75,17 @@ class ChatItemData {
   final String name;
   final String message;
   final String time;
+  final String avatarUrl;
 
   ChatItemData({
     required this.name,
     required this.message,
     required this.time,
-  });
+  }) : avatarUrl = generateAvatarUrl(name);
+
+  static String generateAvatarUrl(String name) {
+    return 'https://source.boringavatars.com/beam/120/$name?colors=264653,2a9d8f,e9c46a,f4a261,e76f51';
+  }
 }
 
 final List<ChatItemData> _chatItems = [
