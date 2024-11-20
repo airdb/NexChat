@@ -102,6 +102,9 @@ class ProfilePage extends StatelessWidget {
             icon: Icons.settings,
             iconColor: Colors.grey,
             title: "Settings",
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/settings');
+            },
           ),
         ],
       ),

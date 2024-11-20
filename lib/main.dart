@@ -4,6 +4,7 @@ import 'pages/chat/chat_screen.dart';
 import 'pages/contact/index.dart';
 import 'pages/explore/index.dart';
 import 'pages/profile/index.dart';
+import 'pages/profile/profile_settings.dart';
 import 'routes/routes.dart';
 
 void main() {
@@ -48,6 +49,13 @@ class MyApp extends StatelessWidget {
               contactName: args['contactName'] as String,
               contactAvatarUrl: args['contactAvatarUrl'] as String,
             ),
+          );
+        }
+        
+        // 检查是否是 profile/settings 路由
+        if (settings.name == '/profile/settings') {
+          return MaterialPageRoute(
+            builder: (context) => const SettingsPage(),
           );
         }
         
