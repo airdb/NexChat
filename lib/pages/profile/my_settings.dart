@@ -23,15 +23,21 @@ class MySettingsPage extends StatelessWidget {
             'General',
             [
               ListTile(
-                title: const Text('Language'),
-                trailing: const Text('English'),
-                onTap: () {
-                  // Handle language selection
-                },
+                title: Text(AppLocalizations.of(context)!.appLanguage),
+                trailing: Consumer<LocaleProvider>(
+                  builder: (context, provider, child) {
+                    return Text(
+                      provider.locale.languageCode == 'en' 
+                        ? 'English' 
+                        : '中文'
+                    );
+                  },
+                ),
+                onTap: () => _showLanguageDialog(context),
               ),
               ListTile(
-                title: const Text('Font Size'),
-                trailing: const Text('Medium'),
+                title: Text(AppLocalizations.of(context)!.tabProfileSettingsFontSizeName),
+                trailing: Text(AppLocalizations.of(context)!.tabProfileSettingsFontSizeMedium),
                 onTap: () {
                   // Handle font size selection
                 },
@@ -98,6 +104,46 @@ class MySettingsPage extends StatelessWidget {
         ),
         ...children,
       ],
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.appLanguage),
+          content: Consumer<LocaleProvider>(
+            builder: (context, provider, child) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    title: const Text('English'),
+                    trailing: provider.locale.languageCode == 'en'
+                        ? const Icon(Icons.check, color: Colors.blue)
+                        : null,
+                    onTap: () {
+                      provider.setLocale(const Locale('en'));
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('中文'),
+                    trailing: provider.locale.languageCode == 'zh'
+                        ? const Icon(Icons.check, color: Colors.blue)
+                        : null,
+                    onTap: () {
+                      provider.setLocale(const Locale('zh'));
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 } 

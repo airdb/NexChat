@@ -17,5 +17,15 @@
   "tabContactsTitle": "Contacts",
   "tabExploreTitle": "Explore",
   "tabMiniProgramTitle": "Mini Program",
-  "tabProfileTitle": "Profile"
+  "tabProfileTitle": "Profile",
+  "tabProfileSettingsFontSizeName": "Font Size",
+  "tabProfileSettingsFontSizeSmall": "Small",
+  "tabProfileSettingsFontSizeMedium": "Medium",
+  "tabProfileSettingsFontSizeLarge": "Large",
+  "tabProfileSettingsFontSizeExtraLarge": "Extra Large",
+  "tabProfileSettingsLanguageName": "Language",
+  "tabProfileSettingsLanguageChinese": "Chinese",
+  "tabProfileSettingsLanguageEnglish": "English",
+  "tabProfileSettingsThemeName": "Theme",
+  "tabProfileSettingsThemeLight": "Light"
 } 

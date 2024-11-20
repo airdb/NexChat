@@ -17,5 +17,15 @@
   "tabContactsTitle": "通讯录",
   "tabExploreTitle": "发现",
   "tabMiniProgramTitle": "小程序",
-  "tabProfileTitle": "我的"
+  "tabProfileTitle": "我的",
+  "tabProfileSettingsFontSizeName": "字体大小",
+  "tabProfileSettingsFontSizeSmall": "小",
+  "tabProfileSettingsFontSizeMedium": "中",
+  "tabProfileSettingsFontSizeLarge": "大",
+  "tabProfileSettingsFontSizeExtraLarge": "特大",
+  "tabProfileSettingsLanguageName": "语言",
+  "tabProfileSettingsLanguageChinese": "中文",
+  "tabProfileSettingsLanguageEnglish": "English",
+  "tabProfileSettingsThemeName": "主题",
+  "tabProfileSettingsThemeLight": "浅色"
 } 
