@@ -7,6 +7,7 @@ import 'pages/profile/index.dart';
 import 'pages/profile/my_settings.dart';
 import 'routes/routes.dart';
 import 'pages/profile/my_order.dart';
+import 'pages/profile/my_account.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,6 +58,13 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/profile/settings') {
           return MaterialPageRoute(
             builder: (context) => const MySettingsPage(),
+          );
+        }
+
+        // 检查是否是 profile/account 路由
+        if (settings.name == '/profile/account') {
+          return MaterialPageRoute(
+            builder: (context) => const MyAccountPage(),
           );
         }
         

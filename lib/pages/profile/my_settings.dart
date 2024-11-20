@@ -15,7 +15,10 @@ class MySettingsPage extends StatelessWidget {
         child: Column(
           children: [
             _buildSettingsGroup([
-              _buildSettingsItem(title: 'Account & Security', onTap: () {}),
+              _buildSettingsItem(
+                title: 'Account & Security',
+                onTap: () => Navigator.pushNamed(context, '/my_account'),
+              ),
               _buildSettingsItem(title: 'Teen Mode', onTap: () {}),
               _buildSettingsItem(title: 'Friend Mode', onTap: () {}),
             ]),

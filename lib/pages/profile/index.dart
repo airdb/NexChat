@@ -102,6 +102,14 @@ class ProfilePage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           _buildMenuItem(
+            icon: Icons.security,
+            iconColor: Colors.blue,
+            title: "Account & Security",
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/account');
+            },
+          ),
+          _buildMenuItem(
             icon: Icons.settings,
             iconColor: Colors.grey,
             title: "Settings",

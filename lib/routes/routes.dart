@@ -8,6 +8,8 @@ import '../pages/chat/chat_screen.dart';
 import '../pages/profile/my_profile.dart';
 import '../pages/profile/my_settings.dart';
 import '../pages/profile/my_order.dart';
+import '../pages/profile/my_account.dart';
+
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
     '/chat': (context) => const ChatPage(),
@@ -17,6 +19,7 @@ class Routes {
     '/profile/service': (context) => const ProfileServicePage(),
     '/profile/me': (context) => const MyProfilePage(),
     '/profile/settings': (context) => const MySettingsPage(),
+    '/profile/account': (context) => const MyAccountPage(),
     '/profile/order': (context) => const MyOrderPage(),
     '/chat/detail': (context) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
