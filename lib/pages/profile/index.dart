@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nexchat/pages/profile/profile_service.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -61,6 +62,9 @@ class ProfilePage extends StatelessWidget {
             icon: Icons.support_agent,
             iconColor: Colors.green,
             title: "Services",
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/service');
+            },
           ),
           _buildMenuItem(
             icon: Icons.collections_bookmark,
@@ -93,6 +97,12 @@ class ProfilePage extends StatelessWidget {
             iconColor: Colors.grey,
             title: "Settings",
           ),
+          _buildMenuItem(
+            icon: Icons.miscellaneous_services,
+            iconColor: Colors.green,
+            title: "服务",
+            onTap: () => Navigator.pushNamed(context, '/profile/service'),
+          ),
         ],
       ),
     );
@@ -102,6 +112,7 @@ class ProfilePage extends StatelessWidget {
     required IconData icon,
     required Color iconColor,
     required String title,
+    VoidCallback? onTap,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -131,6 +142,7 @@ class ProfilePage extends StatelessWidget {
           color: Colors.grey[400],
           size: 20,
         ),
+        onTap: onTap,
       ),
     );
   }

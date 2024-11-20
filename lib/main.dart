@@ -3,6 +3,7 @@ import 'pages/chat/index.dart';
 import 'pages/contact/index.dart';
 import 'pages/explore/index.dart';
 import 'pages/profile/index.dart';
+import 'routes/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      routes: routes,
       home: const MyHomePage(title: 'NexChat'),
     );
   }
