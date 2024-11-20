@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'chat_popup.dart';
 
 class ChatScreen extends StatefulWidget {
   final String contactName;
@@ -178,14 +179,19 @@ class ChatMessageWidget extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
-              color: message.isMe ? Colors.green[300] : Colors.grey[200],
-              borderRadius: BorderRadius.circular(16),
+              color: message.isMe ? Colors.blue : Colors.grey[200],
+              borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(
+            child: SelectableText(
               message.content,
               style: TextStyle(
                 color: message.isMe ? Colors.white : Colors.black,
               ),
+              onSelectionChanged: (selection, cause) {
+                if (selection.baseOffset != selection.extentOffset) {
+                  // 文本被选中时的处理
+                }
+              },
             ),
           ),
           if (message.isMe) ...[
