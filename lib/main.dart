@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: routes,
+      routes: Routes.routes,
       home: const MyHomePage(title: 'NexChat'),
     );
   }

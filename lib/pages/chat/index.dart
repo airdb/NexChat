@@ -65,6 +65,16 @@ class ChatPage extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/chat/detail',
+              arguments: {
+                'contactName': chat.name,
+                'contactAvatarUrl': chat.avatarUrl,
+              },
+            );
+          },
         );
       },
     );
