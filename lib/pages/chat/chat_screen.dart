@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ChatScreen extends StatelessWidget {
   final String contactName;
@@ -13,16 +12,10 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Debug: Contact name in ChatScreen: $contactName');
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -30,12 +23,9 @@ class ChatScreen extends StatelessWidget {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
-            color: Colors.black,
           ),
         ),
         centerTitle: true,
-        foregroundColor: Colors.black,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Column(
         children: [

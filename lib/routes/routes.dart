@@ -13,9 +13,13 @@ class Routes {
     '/explore': (context) => const ExplorePage(),
     '/profile': (context) => const ProfilePage(),
     '/profile/service': (context) => const ProfileServicePage(),
-    '/chat/detail': (context) => const ChatScreen(
-          contactName: '',
-          contactAvatarUrl: '',
-        ),
+    '/chat/detail': (context) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      print('Debug: Arguments received in route builder: $args');
+      return ChatScreen(
+        contactName: args['contactName'] as String,
+        contactAvatarUrl: args['contactAvatarUrl'] as String,
+      );
+    },
   };
 } 
