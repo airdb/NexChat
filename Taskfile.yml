@@ -39,4 +39,5 @@ tasks:
   clean:
     desc: Clean up
     cmds:
+      - rm -rf ./build
       - flutter clean

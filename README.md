@@ -31,6 +31,33 @@ NexChat is a modern, next-generation chat application designed to connect people
 - AI (Lamda3, Qwen)
 - Localization
 
+
+## Prerequisites (macOS)
+
+### iOS
+
+#### Install Xcode
+
+```bash
+brew install --cask xcode
+```
+
+#### Setup iOS SDK
+
+https://docs.flutter.dev/get-started/install/macos/mobile-ios#check-your-development-setup
+
+### Android Studio
+#### Install Android Studio
+
+```bash
+brew install --cask android-studio
+```
+
+#### Setup android SDK
+
+https://docs.flutter.dev/get-started/install/macos/mobile-android#check-your-development-setup
+
+
 ## References
 
 - [WeChat_flutter](https://github.com/fluttercandies/wechat_flutter)
