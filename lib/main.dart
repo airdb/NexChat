@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
         
-        // 先检查是否是 chat/detail 路由
+        // Check if it's a chat/detail route
         if (settings.name == '/chat/detail') {
           final args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute(
@@ -55,28 +55,28 @@ class MyApp extends StatelessWidget {
           );
         }
         
-        // 检查是否是 profile/settings 路由
+        // Check if it's a profile/settings route
         if (settings.name == '/profile/settings') {
           return MaterialPageRoute(
             builder: (context) => const MySettingsPage(),
           );
         }
 
-        // 检查是否是 profile/account 路由
+        // Check if it's a profile/account route
         if (settings.name == '/profile/account') {
           return MaterialPageRoute(
             builder: (context) => const MyAccountPage(),
           );
         }
 
-        // 检查是否是 explore/mini-program 路由
+        // Check if it's an explore/mini-program route
         if (settings.name == '/explore/mini-program') {
           return MaterialPageRoute(
             builder: (context) => const MiniProgramPage(),
           );
         }
         
-        // 检查是否存在于预定义路由中
+        // Check if the route exists in predefined routes
         final route = Routes.routes[settings.name];
         if (route != null) {
           return MaterialPageRoute(
@@ -115,8 +115,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Locale _locale = Locale('en'); // default locale.
-
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -134,32 +132,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Safer way to get localizations
     final localizations = AppLocalizations.of(context);
+    if (localizations == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(localizations!.appTitle),
+        title: Text(localizations.appTitle),
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
+            icon: const Icon(Icons.chat),
+            label: localizations.tabChatTitle,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contacts),
-            label: 'Contact',
+            icon: const Icon(Icons.contacts),
+            label: localizations.tabContactsTitle,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
+            icon: const Icon(Icons.explore),
+            label: localizations.tabExploreTitle,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: const Icon(Icons.person),
+            label: localizations.tabProfileTitle,
           ),
         ],
         currentIndex: _selectedIndex,
