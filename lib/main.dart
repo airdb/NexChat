@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
         
+        // 先检查是否是 chat/detail 路由
         if (settings.name == '/chat/detail') {
           final args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute(
@@ -50,10 +51,16 @@ class MyApp extends StatelessWidget {
           );
         }
         
-        // 其他路由处理
+        // 检查是否存在于预定义路由中
+        final route = Routes.routes[settings.name];
+        if (route != null) {
+          return MaterialPageRoute(
+            builder: route,
+          );
+        }
+        
         return null;
       },
-      routes: Routes.routes,
       home: const MyHomePage(title: 'NexChat'),
     );
   }
