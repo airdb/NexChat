@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/chat_page.dart';
+import 'pages/chat/index.dart';
+import 'pages/contact/index.dart';
+import 'pages/explore/index.dart';
+import 'pages/profile/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,20 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  static const List<Widget> _pages = <Widget>[
-    ChatPage(),
-    Text(
-      'Contact',
-      style: TextStyle(fontSize: 30),
-    ),
-    Text(
-      'Explore',
-      style: TextStyle(fontSize: 30),
-    ),
-    Text(
-      'Profile',
-      style: TextStyle(fontSize: 30),
-    ),
+  final List<Widget> _pages = [
+    const ChatPage(),
+    const ContactPage(),
+    const ExplorePage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -85,11 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('WeChat'),
       ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
-      ),
+      body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
