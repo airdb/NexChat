@@ -47,20 +47,55 @@ class ExplorePage extends StatelessWidget {
             child: ListView(
               children: [
                 _buildExploreItem(
-                  icon: Icons.remove_red_eye_outlined,
-                  iconColor: const Color(0xFFFFB800),
-                  title: "Look Look",
+                  icon: Icons.restaurant_outlined,
+                  iconColor: const Color(0xFFFF6B6B),
+                  title: "Food & Dining",
                 ),
                 const Divider(height: 1, indent: 56),
                 _buildExploreItem(
-                  icon: Icons.pets_outlined,
-                  iconColor: const Color(0xFF8B572A),
-                  title: "Shake Shake",
+                  icon: Icons.coffee_outlined,
+                  iconColor: const Color(0xFF795548),
+                  title: "Drinks & Cafes",
+                ),
+                const Divider(height: 1, indent: 56),
+                _buildExploreItem(
+                  icon: Icons.celebration_outlined,
+                  iconColor: const Color(0xFFE91E63),
+                  title: "Entertainment & Activities",
+                ),
+                const Divider(height: 1, indent: 56),
+                _buildExploreItem(
+                  icon: Icons.flight_outlined,
+                  iconColor: const Color(0xFF2196F3),
+                  title: "Travel & Adventure",
+                ),
+                const Divider(height: 1, indent: 56),
+                _buildExploreItem(
+                  icon: Icons.shopping_bag_outlined,
+                  iconColor: const Color(0xFF4CAF50),
+                  title: "Shopping & Deals",
+                ),
+                const Divider(height: 1, indent: 56),
+                _buildExploreItem(
+                  icon: Icons.groups_outlined,
+                  iconColor: const Color(0xFF9C27B0),
+                  title: "Meetup & Networking",
+                ),
+                _buildExploreItem(
+                  icon: Icons.work_outline,
+                  iconColor: const Color(0xFF607D8B),
+                  title: "Job & Hiring",
                 ),
                 Container(
                   height: 8,
                   color: Colors.grey[200],
                 ),
+                _buildExploreItem(
+                  icon: Icons.calendar_today_outlined,
+                  iconColor: const Color(0xFFFF9800),
+                  title: "Today",
+                ),
+                const Divider(height: 1, indent: 56),
                 _buildExploreItem(
                   icon: Icons.location_on_outlined,
                   iconColor: const Color(0xFF1878F3),
@@ -75,6 +110,8 @@ class ExplorePage extends StatelessWidget {
                   iconColor: const Color(0xFF8B44FF),
                   title: "Mini Program",
                 ),
+                const Divider(height: 1, indent: 56),
+
               ],
             ),
           ),

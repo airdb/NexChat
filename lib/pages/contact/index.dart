@@ -53,26 +53,32 @@ class ContactPage extends StatelessWidget {
                     title: "Official Accounts",
                   ),
                   ContactListItem(
+                    icon: Icons.account_balance_outlined,
+                    color: Colors.blue,
+                    title: "Government Account",
+                  ),
+                  ContactListItem(
                     icon: Icons.business_center_outlined,
                     color: Colors.blue,
                     title: "Business Contacts",
                   ),
-                  GroupTitle(title: "My Enterprise"),
+                  GroupTitle(title: "Company Or Shop"),
                   ContactListItem(
                     icon: Icons.apartment_outlined,
                     color: Colors.lightBlue,
-                    title: "Enterprise Contacts",
+                    title: "Company",
                   ),
                   ContactListItem(
-                    icon: Icons.agriculture_outlined,
-                    color: Colors.green,
-                    title: "Agriculture Service",
+                    icon: Icons.shopping_bag_outlined,
+                    color: Colors.purple,
+                    title: "Shop",
                   ),
                   ContactListItem(
                     icon: Icons.store_outlined,
                     color: Colors.red,
                     title: "Store",
                   ),
+
                 ],
               ),
             ),
