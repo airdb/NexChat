@@ -3,8 +3,8 @@ import '../pages/chat/index.dart';
 import '../pages/contact/index.dart';
 import '../pages/explore/index.dart';
 import '../pages/profile/index.dart';
-import '../pages/chat/chat_screen.dart';
 import '../pages/profile/profile_service.dart';
+import '../pages/chat/chat_screen.dart';
 
 class Routes {
   static final Map<String, WidgetBuilder> routes = {

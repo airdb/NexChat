@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/chat/index.dart';
+import 'pages/chat/chat_screen.dart';
 import 'pages/contact/index.dart';
 import 'pages/explore/index.dart';
 import 'pages/profile/index.dart';
@@ -12,7 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,6 +36,22 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      onGenerateRoute: (settings) {
+        print("Debug - Route Settings: ${settings.name}, Args: ${settings.arguments}");
+        
+        if (settings.name == '/chat/detail') {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              contactName: args['contactName'] as String,
+              contactAvatarUrl: args['contactAvatarUrl'] as String,
+            ),
+          );
+        }
+        
+        // 其他路由处理
+        return null;
+      },
       routes: Routes.routes,
       home: const MyHomePage(title: 'NexChat'),
     );

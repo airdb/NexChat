@@ -66,12 +66,13 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           onTap: () {
+            print('Navigating to chat detail for ${chat.name}');
             Navigator.pushNamed(
               context,
               '/chat/detail',
               arguments: {
                 'contactName': chat.name,
-                'contactAvatarUrl': chat.avatarUrl,
+                'contactAvatarUrl': "",
               },
             );
           },
