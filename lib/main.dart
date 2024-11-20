@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/chat_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,10 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   static const List<Widget> _pages = <Widget>[
-    Text(
-      'Chat',
-      style: TextStyle(fontSize: 30),
-    ),
+    ChatPage(),
     Text(
       'Contact',
       style: TextStyle(fontSize: 30),
