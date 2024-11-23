@@ -62,5 +62,8 @@
   "contactCompany": "公司",
   "contactShop": "商铺",
   "contactStore": "店铺",
-  "contactMerchant": "商家"
+  "contactMerchant": "商家",
+
+  "tabPhotoTitle": "照片",
+  "tabShareTitle": "分享"
 } 

@@ -119,8 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return localizations.tabContactsTitle;
       case 2:
-        return localizations.tabExploreTitle;
+        return localizations.tabPhotoTitle;
       case 3:
+        return localizations.tabExploreTitle;
+      case 4:
         return localizations.tabProfileTitle;
       default:
         return localizations.appTitle;
@@ -136,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _pages = [
     const ChatPage(),
     const ContactPage(),
+    const ChatPage(),
     const ExplorePage(),
     const ProfilePage(),
   ];
@@ -163,6 +166,14 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.contacts),
             label: localizations.tabContactsTitle,
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              "assets/images/chat_64x64.png",
+              width: 64,
+              height: 64,
+            ),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.explore),

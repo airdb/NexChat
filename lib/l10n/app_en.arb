@@ -61,5 +61,8 @@
   "contactCompany": "Company",
   "contactShop": "Shop",
   "contactStore": "Store",
-  "contactMerchant": "Merchant"
+  "contactMerchant": "Merchant",
+
+  "tabPhotoTitle": "Photo",
+  "tabShareTitle": "Share"
 } 

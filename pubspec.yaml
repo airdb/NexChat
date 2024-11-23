@@ -94,3 +94,6 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
   generate: true
+
+  assets:
+    - assets/images/
