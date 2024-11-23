@@ -13,6 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'providers/locale_provider.dart';
+import 'pages/chatbot/index.dart';
 
 void main() {
   runApp(
@@ -70,6 +71,13 @@ class MyApp extends StatelessWidget {
             builder: (context) => const MiniProgramPage(),
           );
         }
+
+        // Check if it's a chatbot route
+        if (settings.name == '/chatbot') {
+          return MaterialPageRoute(
+            builder: (context) => const ChatbotPage(),
+          );
+        }
         
         // Check if the route exists in predefined routes
         final route = Routes.routes[settings.name];
@@ -119,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return localizations.tabContactsTitle;
       case 2:
-        return localizations.tabPhotoTitle;
+        return localizations.tabChatbotTitle;
       case 3:
         return localizations.tabExploreTitle;
       case 4:
@@ -138,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _pages = [
     const ChatPage(),
     const ContactPage(),
-    const ChatPage(),
+    const ChatbotPage(),
     const ExplorePage(),
     const ProfilePage(),
   ];
