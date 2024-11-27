@@ -47,27 +47,72 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(16),
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  return _messages[index];
-                },
-              ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(16),
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                return _messages[index];
+              },
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: _buildTextComposer(),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+              top: 24,
+              left: 24,
+              right: 24,
             ),
-          ],
-        ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: Colors.grey.shade100)),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _messageController,
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message...',
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(color: Colors.grey.shade200),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(color: Colors.grey.shade200),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(color: Colors.grey.shade300),
+                      ),
+                      fillColor: Colors.grey.shade50,
+                      filled: true,
+                    ),
+                    minLines: 1,
+                    maxLines: 4,
+                    onSubmitted: _handleSubmitted,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () => _handleSubmitted(_messageController.text),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(
+                    minWidth: 32,
+                    minHeight: 32,
+                  ),
+                  color: const Color(0xFF1677ff),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -81,64 +126,20 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
         text: text,
         isUser: true,
       ));
-      _addBotResponse(text);
     });
+    
+    _scrollToBottom();  // 用户消息发送后滚动
 
-    _scrollToBottom();
-  }
-
-  void _addBotResponse(String userMessage) {
+    // 添加机器人回复
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _messages.add(ChatMessage(
-          text: "I received your message: \"$userMessage\"",
+          text: "I received your message: \"$text\"",
           isUser: false,
         ));
+        _scrollToBottom();  // 机器人回复后滚动
       });
     });
-  }
-
-  Widget _buildTextComposer() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade100)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _messageController,
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message...',
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                fillColor: Colors.grey.shade50,
-                filled: true,
-              ),
-              minLines: 1,
-              maxLines: 4,
-              onSubmitted: _handleSubmitted,
-            ),
-          ),
-          const SizedBox(width: 12),
-          IconButton(
-            icon: const Icon(Icons.send),
-            onPressed: () => _handleSubmitted(_messageController.text),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(
-              minWidth: 32,
-              minHeight: 32,
-            ),
-            color: const Color(0xFF1677ff),
-          ),
-        ],
-      ),
-    );
   }
 
   void _scrollToBottom() {
