@@ -14,6 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'providers/locale_provider.dart';
 import 'pages/chatbot/index.dart';
+import 'pages/profile/payment_code_page.dart';
 
 void main() {
   runApp(
@@ -92,6 +93,8 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'NexChat'),
       routes: {
         '/profile/order': (context) => const MyOrderPage(),
+        '/profile/payment_code': (context) => const PaymentCodePage(),
+
       },
       locale: Provider.of<LocaleProvider>(context).locale,
       supportedLocales: AppLocalizations.supportedLocales,

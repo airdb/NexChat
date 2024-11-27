@@ -26,6 +26,7 @@ class ChatPage extends StatelessWidget {
               color: Colors.grey[300],
             ),
             child: ClipOval(
+              /*
               child: Image.network(
                 chat.avatarUrl,
                 fit: BoxFit.cover,
@@ -40,6 +41,9 @@ class ChatPage extends StatelessWidget {
                   return Icon(Icons.person, color: Colors.white);
                 },
               ),
+              */
+              // child: Image.asset('assets/default_avatar.png'),
+              child: Image.asset('assets/avatar/avatar_03.png'),
             ),
           ),
           title: Padding(
@@ -101,7 +105,8 @@ class ChatItemData {
        sessionId = sessionId ?? name.toLowerCase().replaceAll(' ', '_');
 
   static String generateAvatarUrl(String name) {
-    return 'https://source.boringavatars.com/beam/120/$name?colors=264653,2a9d8f,e9c46a,f4a261,e76f51';
+    final randomNumber = (name.hashCode % 5) + 1;
+    return 'assets/avatar/avatar_0${randomNumber}.png';
   }
 }
 

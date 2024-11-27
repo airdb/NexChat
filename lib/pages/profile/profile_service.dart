@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class ProfileServicePage extends StatelessWidget {
   const ProfileServicePage({super.key});
 
@@ -79,17 +80,26 @@ class ProfileServicePage extends StatelessWidget {
   }
 
   Widget _buildTopItem(IconData icon, String text) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: Colors.white, size: 28),
-        const SizedBox(height: 8),
-        Text(
-          text,
-          style: const TextStyle(color: Colors.white),
-          textAlign: TextAlign.center,
+    return Builder(
+      builder: (context) => GestureDetector(
+        onTap: () {
+          if (text == 'Payment') {
+            Navigator.pushNamed(context, '/profile/payment_code');
+          }
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: Colors.white, size: 28),
+            const SizedBox(height: 8),
+            Text(
+              text,
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
