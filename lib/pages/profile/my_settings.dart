@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/locale_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'settings_app_icon.dart';
 
 
 class MySettingsPage extends StatelessWidget {
@@ -19,6 +20,23 @@ class MySettingsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          _buildSection(
+            'App Icon',
+            [
+              ListTile(
+                title: Text('App Icon'),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AppIconSettingsPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
           _buildSection(
             'General',
             [
