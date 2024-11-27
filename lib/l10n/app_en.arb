@@ -65,5 +65,7 @@
   
   "chatInputHint": "Type a message...",
   "tabChatbotTitle": "Chatbot",
-  "chatbotWelcomeMessage": "Hello, I am AI Assistant. How can I help you?"
+  "chatbotWelcomeMessage": "Hello, I am AI Assistant. How can I help you?",
+
+  "miniProgramRecent": "Recent"
 } 

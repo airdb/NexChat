@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'providers/locale_provider.dart';
 import 'pages/chatbot/index.dart';
 import 'pages/profile/payment_code_page.dart';
+import 'pages/chat/chat_mini_program.dart';
 
 void main() {
   runApp(
@@ -92,9 +93,10 @@ class MyApp extends StatelessWidget {
       },
       home: const MyHomePage(title: 'NexChat'),
       routes: {
+        '/chat/index': (context) => const ChatPage(),
         '/profile/order': (context) => const MyOrderPage(),
         '/profile/payment_code': (context) => const PaymentCodePage(),
-
+        '/chat/mini_program': (context) => const ChatMiniProgramPage(),
       },
       locale: Provider.of<LocaleProvider>(context).locale,
       supportedLocales: AppLocalizations.supportedLocales,

@@ -66,5 +66,7 @@
 
   "chatInputHint": "输入消息...",
   "tabChatbotTitle": "聊天机器人",
-  "chatbotWelcomeMessage": "你好，我是小智，有什么可以帮您的吗？"
+  "chatbotWelcomeMessage": "你好，我是小智，有什么可以帮您的吗？",
+
+  "miniProgramRecent": "最近"
 } 

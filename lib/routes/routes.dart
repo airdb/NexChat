@@ -13,6 +13,7 @@ import '../pages/explore/mini_program.dart';
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
     '/chat': (context) => const ChatPage(),
+    '/chat/index': (context) => const ChatPage(),
     '/contacts': (context) => const ContactPage(),
     '/explore': (context) => const ExplorePage(),
     '/profile': (context) => const ProfilePage(),
