@@ -8,40 +8,76 @@ class ChatbotPage extends StatefulWidget {
   State<ChatbotPage> createState() => _ChatbotPageState();
 }
 
-class _ChatbotPageState extends State<ChatbotPage> {
+class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
   final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _messages.add(ChatMessage(
+          text: AppLocalizations.of(context)?.chatbotWelcomeMessage ?? 
+                'Hello, I am AI Assistant. How can I help you?',
+          isUser: false,
+        ));
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            reverse: false,
-            itemCount: _messages.isEmpty 
-                ? 1  // Show welcome message if message list is empty
-                : _messages.length,
-            itemBuilder: (context, index) {
-              if (_messages.isEmpty) {
-                // Return welcome message
-                return ChatMessage(
-                  text: AppLocalizations.of(context)?.chatbotWelcomeMessage ?? 
-                        'Hello, I am AI Assistant. How can I help you?',
-                  isUser: false,
-                );
-              }
-              return _messages[index];
-            },
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              reverse: false,
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                return _messages[index];
+              },
+            ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom + 8,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+              ),
+              child: _buildTextComposer(),
+            ),
           ),
-          child: _buildTextComposer(),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -50,13 +86,19 @@ class _ChatbotPageState extends State<ChatbotPage> {
 
     _messageController.clear();
     setState(() {
-      // Add message to the end of the list
       _messages.add(ChatMessage(
         text: text,
         isUser: true,
       ));
-      // Add bot response
       _addBotResponse(text);
+    });
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     });
   }
 
@@ -69,12 +111,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
         ));
       });
     });
-  }
-
-  @override
-  void dispose() {
-    _messageController.dispose();
-    super.dispose();
   }
 
   Widget _buildTextComposer() {
