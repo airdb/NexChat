@@ -16,6 +16,7 @@ import 'providers/locale_provider.dart';
 import 'pages/chatbot/index.dart';
 import 'pages/profile/payment_code_page.dart';
 import 'pages/chat/chat_mini_program.dart';
+import 'pages/chat/qr_scan_page.dart';
 
 void main() {
   runApp(
@@ -97,6 +98,7 @@ class MyApp extends StatelessWidget {
         '/profile/order': (context) => const MyOrderPage(),
         '/profile/payment_code': (context) => const PaymentCodePage(),
         '/chat/mini_program': (context) => const ChatMiniProgramPage(),
+        '/chat/qr_scan_page': (context) => const QRScanPage(),
       },
       locale: Provider.of<LocaleProvider>(context).locale,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -210,6 +212,12 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: [
             PopupMenuButton<int>(
               icon: const Icon(Icons.add_circle_outline),
+              offset: const Offset(0, 20),
+              position: PopupMenuPosition.under,
+              color: Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
               onSelected: (value) {
                 switch (value) {
                   case 0:
@@ -219,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     print(localizations.chatAddFriend);
                     break;
                   case 2:
-                    print(localizations.chatScanQr);
+                    Navigator.pushNamed(context, '/chat/qr_scan_page');
                     break;
                   case 3:
                     print(localizations.chatPayment);
@@ -230,29 +238,41 @@ class _MyHomePageState extends State<MyHomePage> {
                 PopupMenuItem(
                   value: 0,
                   child: ListTile(
-                    leading: const Icon(Icons.chat),
-                    title: Text(localizations.chatStartGroupChat),
+                    leading: const Icon(Icons.chat, color: Colors.white),
+                    title: Text(
+                      localizations.chatStartGroupChat,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 PopupMenuItem(
                   value: 1,
                   child: ListTile(
-                    leading: const Icon(Icons.person_add),
-                    title: Text(localizations.chatAddFriend),
+                    leading: const Icon(Icons.person_add, color: Colors.white),
+                    title: Text(
+                      localizations.chatAddFriend,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 PopupMenuItem(
                   value: 2,
                   child: ListTile(
-                    leading: const Icon(Icons.qr_code_scanner),
-                    title: Text(localizations.chatScanQr),
+                    leading: const Icon(Icons.qr_code_scanner, color: Colors.white),
+                    title: Text(
+                      localizations.chatScanQr,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 PopupMenuItem(
                   value: 3,
                   child: ListTile(
-                    leading: const Icon(Icons.payment),
-                    title: Text(localizations.chatPayment),
+                    leading: const Icon(Icons.payment, color: Colors.white),
+                    title: Text(
+                      localizations.chatPayment,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
