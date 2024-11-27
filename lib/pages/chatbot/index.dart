@@ -46,31 +46,28 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              reverse: false,
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                return _messages[index];
-              },
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.all(16),
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  return _messages[index];
+                },
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 8,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: _buildTextComposer(),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -103,7 +100,7 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
 
   Widget _buildTextComposer() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(top: BorderSide(color: Colors.grey.shade100)),
@@ -115,18 +112,10 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
               controller: _messageController,
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message...',
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
                 ),
                 fillColor: Colors.grey.shade50,
                 filled: true,
@@ -136,14 +125,14 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
               onSubmitted: _handleSubmitted,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
           IconButton(
             icon: const Icon(Icons.send),
             onPressed: () => _handleSubmitted(_messageController.text),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(
-              minWidth: 40,
-              minHeight: 40,
+              minWidth: 32,
+              minHeight: 32,
             ),
             color: const Color(0xFF1677ff),
           ),
