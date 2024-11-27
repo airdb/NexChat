@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 export 'chat_screen.dart';
 
 class ChatPage extends StatelessWidget {
@@ -107,7 +108,7 @@ class ChatItemData {
     */
     // Use name hash to generate a consistent avatar for each name
     final hash = name.hashCode.abs().toString();
-    return 'https://api.dicebear.com/7.x/avataaars/png?seed=$hash';
+    return 'https://api.dicebear.com/7.x/avataaars/svg?seed=$hash';
   }
 }
 
