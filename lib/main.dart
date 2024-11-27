@@ -164,10 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(_getTitle(localizations)),
-      ),
+      appBar: _buildAppBar(context, localizations),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -202,5 +199,78 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  PreferredSizeWidget? _buildAppBar(BuildContext context, AppLocalizations localizations) {
+    switch (_selectedIndex) {
+      case 0:
+        return AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(_getTitle(localizations)),
+          actions: [
+            PopupMenuButton<int>(
+              icon: const Icon(Icons.add_circle_outline),
+              onSelected: (value) {
+                switch (value) {
+                  case 0:
+                    print(localizations.chatStartGroupChat);
+                    break;
+                  case 1:
+                    print(localizations.chatAddFriend);
+                    break;
+                  case 2:
+                    print(localizations.chatScanQr);
+                    break;
+                  case 3:
+                    print(localizations.chatPayment);
+                    break;
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 0,
+                  child: ListTile(
+                    leading: const Icon(Icons.chat),
+                    title: Text(localizations.chatStartGroupChat),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 1,
+                  child: ListTile(
+                    leading: const Icon(Icons.person_add),
+                    title: Text(localizations.chatAddFriend),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 2,
+                  child: ListTile(
+                    leading: const Icon(Icons.qr_code_scanner),
+                    title: Text(localizations.chatScanQr),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 3,
+                  child: ListTile(
+                    leading: const Icon(Icons.payment),
+                    title: Text(localizations.chatPayment),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      case 4:
+        return AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(_getTitle(localizations)),
+          centerTitle: true,
+        );
+      default:
+        return AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(_getTitle(localizations)),
+        );
+    }
   }
 }

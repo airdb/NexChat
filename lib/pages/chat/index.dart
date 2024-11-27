@@ -94,65 +94,6 @@ class _ChatPageState extends State<ChatPage> {
     final localizations = AppLocalizations.of(context)!;
     
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent, // 设置透明背景
-        elevation: 0, // 移除阴影
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: PopupMenuButton<int>(
-              padding: EdgeInsets.zero,
-              icon: const Icon(Icons.add_circle_outline),
-              onSelected: (value) {
-                switch (value) {
-                  case 0:
-                    print(localizations.chatStartGroupChat);
-                    break;
-                  case 1:
-                    print(localizations.chatAddFriend);
-                    break;
-                  case 2:
-                    print(localizations.chatScanQr);
-                    break;
-                  case 3:
-                    print(localizations.chatPayment);
-                    break;
-                }
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 0,
-                  child: ListTile(
-                    leading: const Icon(Icons.chat),
-                    title: Text(localizations.chatStartGroupChat),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 1,
-                  child: ListTile(
-                    leading: const Icon(Icons.person_add),
-                    title: Text(localizations.chatAddFriend),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 2,
-                  child: ListTile(
-                    leading: const Icon(Icons.qr_code_scanner),
-                    title: Text(localizations.chatScanQr),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 3,
-                  child: ListTile(
-                    leading: const Icon(Icons.payment),
-                    title: Text(localizations.chatPayment),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
       body: RefreshIndicator(
         onRefresh: _refreshTop,
         child: Material(
