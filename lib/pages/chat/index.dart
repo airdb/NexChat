@@ -26,24 +26,20 @@ class ChatPage extends StatelessWidget {
               color: Colors.grey[300],
             ),
             child: ClipOval(
-              /*
               child: Image.network(
                 chat.avatarUrl,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
-                  return Center(
-                    child: Icon(Icons.person, color: Colors.white),
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 },
                 errorBuilder: (context, error, stackTrace) {
                   print('Error loading avatar: $error');
-                  return Icon(Icons.person, color: Colors.white);
+                  return const Icon(Icons.person, color: Colors.white);
                 },
               ),
-              */
-              // child: Image.asset('assets/default_avatar.png'),
-              child: Image.asset('assets/avatar/avatar_03.png'),
             ),
           ),
           title: Padding(
@@ -105,8 +101,13 @@ class ChatItemData {
        sessionId = sessionId ?? name.toLowerCase().replaceAll(' ', '_');
 
   static String generateAvatarUrl(String name) {
+    /*
     final randomNumber = (name.hashCode % 5) + 1;
     return 'assets/avatar/avatar_0${randomNumber}.png';
+    */
+    // Use name hash to generate a consistent avatar for each name
+    final hash = name.hashCode.abs().toString();
+    return 'https://api.dicebear.com/7.x/avataaars/png?seed=$hash';
   }
 }
 
