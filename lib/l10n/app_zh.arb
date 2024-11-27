@@ -68,5 +68,10 @@
   "tabChatbotTitle": "聊天机器人",
   "chatbotWelcomeMessage": "你好，我是小智，有什么可以帮您的吗？",
 
+  "chatStartGroupChat": "发起群聊",
+  "chatAddFriend": "添加朋友",
+  "chatScanQr": "扫一扫",
+  "chatPayment": "收付款",
+
   "miniProgramRecent": "最近"
 } 

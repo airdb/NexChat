@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'chat_mini_program.dart'; // Import the new page
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import generated localization file
 
 export 'chat_screen.dart';
 
@@ -90,103 +91,166 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _refreshTop,
-      child: Material(
-        child: ListView.separated(
-          controller: _scrollController, // 添加控制器
-          itemCount: _chatItems.length,
-          separatorBuilder: (context, index) => const Divider(
-            height: 0.5,
-            color: Colors.black12,
-          ),
-          itemBuilder: (context, index) {
-            final chat = _chatItems[index];
-            print('Avatar URL for ${chat.name}: ${chat.avatarUrl}');
-
-            return Material(
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                leading: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey[300],
+    final localizations = AppLocalizations.of(context)!;
+    
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent, // 设置透明背景
+        elevation: 0, // 移除阴影
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: PopupMenuButton<int>(
+              padding: EdgeInsets.zero,
+              icon: const Icon(Icons.add_circle_outline),
+              onSelected: (value) {
+                switch (value) {
+                  case 0:
+                    print(localizations.chatStartGroupChat);
+                    break;
+                  case 1:
+                    print(localizations.chatAddFriend);
+                    break;
+                  case 2:
+                    print(localizations.chatScanQr);
+                    break;
+                  case 3:
+                    print(localizations.chatPayment);
+                    break;
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 0,
+                  child: ListTile(
+                    leading: const Icon(Icons.chat),
+                    title: Text(localizations.chatStartGroupChat),
                   ),
-                  child: ClipOval(
-                    child: Image.network(
+                ),
+                PopupMenuItem(
+                  value: 1,
+                  child: ListTile(
+                    leading: const Icon(Icons.person_add),
+                    title: Text(localizations.chatAddFriend),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 2,
+                  child: ListTile(
+                    leading: const Icon(Icons.qr_code_scanner),
+                    title: Text(localizations.chatScanQr),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 3,
+                  child: ListTile(
+                    leading: const Icon(Icons.payment),
+                    title: Text(localizations.chatPayment),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: _refreshTop,
+        child: Material(
+          child: ListView.separated(
+            controller: _scrollController,
+            itemCount: _chatItems.length,
+            separatorBuilder: (context, index) => const Divider(
+              height: 0.5,
+              color: Colors.black12,
+            ),
+            itemBuilder: (context, index) {
+              final chat = _chatItems[index];
+              print('Avatar URL for ${chat.name}: ${chat.avatarUrl}');
+
+              return Material(
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  leading: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[300],
+                    ),
+                    child: ClipOval(
+                      child: Image.network(
+                        chat.avatarUrl,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          print('Error loading avatar: $error');
+                          return const Icon(Icons.person, color: Colors.white);
+                        },
+                      ),
+                    ),
+                    /*
+                    child: SvgPicture.network(
                       chat.avatarUrl,
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        print('Error loading avatar: $error');
+                      // 加载时显示进度条
+                      placeholderBuilder: (context) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      // 发生错误时显示默认头像图标
+                      onError: (error, stackTrace) {
+                        print('Error loading SVG avatar: $error');
                         return const Icon(Icons.person, color: Colors.white);
                       },
                     ),
-                  ),
-                  /*
-                  child: SvgPicture.network(
-                    chat.avatarUrl,
-                    fit: BoxFit.cover,
-                    // 加载时显示进度条
-                    placeholderBuilder: (context) => const Center(
-                      child: CircularProgressIndicator(),
                     ),
-                    // 发生错误时显示默认头像图标
-                    onError: (error, stackTrace) {
-                      print('Error loading SVG avatar: $error');
-                      return const Icon(Icons.person, color: Colors.white);
-                    },
+                    */
                   ),
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      chat.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                  */
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    chat.name,
+                  subtitle: Text(
+                    chat.message,
                     style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: Colors.grey,
                     ),
                   ),
-                ),
-                subtitle: Text(
-                  chat.message,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
+                  trailing: Text(
+                    chat.time,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
                   ),
+                  onTap: () {
+                    final args = {
+                      'contactName': chat.name,
+                      'contactAvatarUrl': chat.avatarUrl,
+                      'sessionId': chat.sessionId,
+                    };
+                    print('Debug: Sending arguments from ChatPage: $args');
+                    Navigator.pushNamed(
+                      context,
+                      '/chat/detail',
+                      arguments: args,
+                    );
+                  },
                 ),
-                trailing: Text(
-                  chat.time,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-                onTap: () {
-                  final args = {
-                    'contactName': chat.name,
-                    'contactAvatarUrl': chat.avatarUrl,
-                    'sessionId': chat.sessionId,
-                  };
-                  print('Debug: Sending arguments from ChatPage: $args');
-                  Navigator.pushNamed(
-                    context,
-                    '/chat/detail',
-                    arguments: args,
-                  );
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

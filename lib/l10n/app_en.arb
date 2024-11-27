@@ -67,5 +67,10 @@
   "tabChatbotTitle": "Chatbot",
   "chatbotWelcomeMessage": "Hello, I am AI Assistant. How can I help you?",
 
+  "chatStartGroupChat": "Start Group Chat",
+  "chatAddFriend": "Add Friend",
+  "chatScanQr": "Scan QR",
+  "chatPayment": "Payment",
+
   "miniProgramRecent": "Recent"
 } 
