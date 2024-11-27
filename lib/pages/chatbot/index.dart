@@ -40,13 +40,7 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
   void didChangeMetrics() {
     super.didChangeMetrics();
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      });
+      _scrollToBottom();
     }
   }
 
@@ -92,14 +86,8 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
       ));
       _addBotResponse(text);
     });
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
+
+    _scrollToBottom();
   }
 
   void _addBotResponse(String userMessage) {
@@ -115,25 +103,65 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
 
   Widget _buildTextComposer() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Colors.grey.shade100)),
+      ),
       child: Row(
         children: [
-          Flexible(
+          Expanded(
             child: TextField(
               controller: _messageController,
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message',
+                hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message...',
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                fillColor: Colors.grey.shade50,
+                filled: true,
               ),
+              minLines: 1,
+              maxLines: 4,
               onSubmitted: _handleSubmitted,
             ),
           ),
+          const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.send),
             onPressed: () => _handleSubmitted(_messageController.text),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(
+              minWidth: 40,
+              minHeight: 40,
+            ),
+            color: const Color(0xFF1677ff),
           ),
         ],
       ),
     );
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 }
 
