@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexchat/services/app_icon_service.dart';
 
 class AppIconSettingsPage extends StatefulWidget {
   const AppIconSettingsPage({super.key});
@@ -70,11 +71,43 @@ class _AppIconSettingsPageState extends State<AppIconSettingsPage> {
                     ? Icon(Icons.check_circle, 
                         color: Theme.of(context).primaryColor)
                     : null,
-                onTap: () {
-                  setState(() {
-                    selectedIcon = icon['name'];
-                  });
-                  // TODO: Implement actual app icon change functionality
+                onTap: () async {
+                  try {
+                    // 显示加载指示器
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+                    
+                    // 更改图标
+                    await AppIconService.changeAppIcon(icon['name']);
+                    
+                    // 更新状态
+                    setState(() {
+                      selectedIcon = icon['name'];
+                    });
+                    
+                    // 关闭加载指示器
+                    Navigator.pop(context);
+                    
+                    // 显示成功消息
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('App icon changed to ${icon['name']}')),
+                    );
+                  } catch (e) {
+                    // 关闭加载指示器
+                    Navigator.pop(context);
+                    
+                    // 显示错误消息
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Failed to change app icon: $e')),
+                    );
+                  }
                 },
               ),
             ),
