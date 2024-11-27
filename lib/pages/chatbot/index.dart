@@ -121,8 +121,8 @@ class ChatMessage extends StatelessWidget {
           if (!isUser) 
             Container(
               margin: const EdgeInsets.only(right: 16.0),
-              child: const CircleAvatar(
-                child: Icon(Icons.android),
+              child: CircleAvatar(
+                child: Image.asset('assets/avatar/chatbot.png'),
               ),
             ),
           Flexible(

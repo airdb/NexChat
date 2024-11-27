@@ -42,6 +42,22 @@ class ChatPage extends StatelessWidget {
                 },
               ),
             ),
+            /*
+            child: SvgPicture.network(
+              chat.avatarUrl,
+              fit: BoxFit.cover,
+              // 加载时显示进度条
+              placeholderBuilder: (context) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              // 发生错误时显示默认头像图标
+              onError: (error, stackTrace) {
+                print('Error loading SVG avatar: $error');
+                return const Icon(Icons.person, color: Colors.white);
+              },
+            ),
+            ),
+            */
           ),
           title: Padding(
             padding: const EdgeInsets.only(bottom: 4),
@@ -108,7 +124,7 @@ class ChatItemData {
     */
     // Use name hash to generate a consistent avatar for each name
     final hash = name.hashCode.abs().toString();
-    return 'https://api.dicebear.com/7.x/avataaars/svg?seed=$hash';
+    return 'https://api.dicebear.com/7.x/avataaars/png?seed=$hash';
   }
 }
 
