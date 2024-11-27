@@ -18,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    // 添加滚动监听
+    // Add scroll listener
     _scrollController.addListener(_onScroll);
   }
 
@@ -28,18 +28,12 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
-  // 处理滚动事件
+  // Handle scroll events
   void _onScroll() {
-    // 检测是否滚动到底部
+    // Check if scrolled to bottom
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       print('Scroll to bottom');
       _loadMore();
-    }
-    
-    // 检测是否滚动到顶部
-    if (_scrollController.position.pixels == _scrollController.position.minScrollExtent) {
-      print('Scroll to top');
-      _refreshTop();
     }
   }
 
@@ -47,20 +41,51 @@ class _ChatPageState extends State<ChatPage> {
     if (!_isLoadingMore) {
       setState(() => _isLoadingMore = true);
       
-      // 在这里添加加载更多数据的逻辑
+      // Add logic for loading more data here
       print('Loading more data...');
-      await Future.delayed(Duration(seconds: 2)); // 模拟网络请求
+      await Future.delayed(Duration(seconds: 2)); // Simulate network request
       
       setState(() => _isLoadingMore = false);
     }
   }
 
   Future<void> _refreshTop() async {
-    print('Debug: Refreshing from top... jump to mini program page');
-    Navigator.pushNamed(
-      context,
-      '/chat/mini_program', // 修改为小程序页面的路由
-      );
+    print('Debug: Refreshing from top...');
+    if (!mounted) return;
+    
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        // 减少动画时间使其更快速
+        transitionDuration: const Duration(milliseconds: 300),
+        pageBuilder: (context, animation, secondaryAnimation) => const ChatMiniProgramPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          // 添加一个缩放效果
+          final scaleAnimation = Tween<double>(
+            begin: 0.88,
+            end: 1.0,
+          ).animate(CurvedAnimation(
+            parent: animation,
+            // 使用 easeOutQuart 曲线使动画更自然
+            curve: Curves.easeOutQuart,
+          ));
+
+          // 结合滑动和缩放效果
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, -1.0),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutQuart,
+            )),
+            child: ScaleTransition(
+              scale: scaleAnimation,
+              child: child,
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override

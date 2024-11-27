@@ -21,9 +21,9 @@ class ChatMiniProgramPage extends StatelessWidget {
       backgroundColor: Colors.black87,
       body: Column(
         children: [
-          _buildSectionHeader(context, '最近使用的小程序'),
+          _buildSectionHeader(context, 'Recently Used Mini Programs'),
           _buildGridView(),
-          _buildSectionHeader(context, '我的小程序'),
+          _buildSectionHeader(context, 'My Mini Programs'),
           _buildGridView(),
         ],
       ),
@@ -69,7 +69,7 @@ class ChatMiniProgramPage extends StatelessWidget {
             TextButton(
               onPressed: () {},
               child: Text(
-                '更多 >',
+                'More >',
                 style: TextStyle(color: Colors.blue),
               ),
             ),
