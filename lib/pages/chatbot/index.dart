@@ -33,6 +33,14 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
                 'Sure, I will help you.',
           isUser: false,
         ));
+        _messages.add(ChatMessage(
+          text: 'This is a test message.',
+          isUser: true,
+        ));
+        _messages.add(ChatMessage(
+          text: 'This is a reply test message.',
+          isUser: false,
+        ));
       });
     });
   }

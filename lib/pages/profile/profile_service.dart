@@ -68,8 +68,8 @@ class ProfileServicePage extends StatelessWidget {
               'Transportation',
               [
                 _buildServiceItem(Icons.flight, 'Travel Services', Colors.blue),
-                _buildServiceItem(Icons.train, 'Train & Flight Tickets', Colors.green),
-                _buildServiceItem(Icons.directions_car, 'DiDi Ride', Colors.orange),
+                _buildServiceItem(Icons.train, 'Train Tickets', Colors.green),
+                _buildServiceItem(Icons.directions_car, 'Grab Ride', Colors.orange),
                 _buildServiceItem(Icons.hotel, 'Hotels & Tourism', Colors.green),
               ],
             ),

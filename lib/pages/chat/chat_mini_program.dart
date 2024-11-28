@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'index.dart';
 
 class ChatMiniProgramPage extends StatelessWidget {
   const ChatMiniProgramPage({super.key});
@@ -7,7 +8,7 @@ class ChatMiniProgramPage extends StatelessWidget {
   static const double _gridPadding = 16.0;
   static const int _crossAxisCount = 4;
   static const double _avatarRadius = 28.0;
-  static const int _itemCount = 12;
+  static const int _itemCount = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,9 @@ class ChatMiniProgramPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.miniProgramRecent),
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF2C2C2C),
       ),
-      backgroundColor: Colors.black87,
+      backgroundColor: const Color(0xFF1E1E1E),
       body: Column(
         children: [
           _buildSectionHeader(context, 'Recently Used Mini Programs'),
@@ -31,11 +32,7 @@ class ChatMiniProgramPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/',
-              (route) => false,
-            );
+            Navigator.of(context).pop();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,7 +87,7 @@ class ChatMiniProgramPage extends StatelessWidget {
         ),
         itemCount: _itemCount,
         itemBuilder: (context, index) => _MiniProgramItem(
-          name: 'mini-program-${index + 1}',
+          name: 'mini-${index + 1}',
           index: index,
         ),
       ),
