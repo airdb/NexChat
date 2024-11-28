@@ -184,7 +184,7 @@ class ChatMessage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 16.0),
               child: CircleAvatar(
-                child: Image.asset('assets/avatar/chatbot.png'),
+                child: Image.asset('assets/avatar/chatbot_avatar.png'),
               ),
             ),
           Flexible(
@@ -200,8 +200,9 @@ class ChatMessage extends StatelessWidget {
           if (isUser)
             Container(
               margin: const EdgeInsets.only(left: 16.0),
-              child: const CircleAvatar(
-                child: Icon(Icons.person),
+              child: CircleAvatar(
+                child: Image.asset('assets/avatar/my_avatar.png'),
+                radius: 20,
               ),
             ),
         ],

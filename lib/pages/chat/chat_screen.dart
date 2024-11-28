@@ -200,7 +200,7 @@ class ChatMessageWidget extends StatelessWidget {
           if (!message.isMe) ...[
             CircleAvatar(
               backgroundImage: NetworkImage(contactAvatarUrl),
-              radius: 16,
+              radius: 20,
             ),
             const SizedBox(width: 8),
           ],
@@ -228,8 +228,9 @@ class ChatMessageWidget extends StatelessWidget {
           if (message.isMe) ...[
             const SizedBox(width: 8),
             CircleAvatar(
-              backgroundImage: NetworkImage('您的头像URL'), // TODO: 替换为实际的用户头像
-              radius: 16,
+              // backgroundImage: NetworkImage('您的头像URL'), // TODO: 替换为实际的用户头像
+              child: Image.asset('assets/avatar/my_avatar.png'),
+              radius: 20,
             ),
           ],
         ],

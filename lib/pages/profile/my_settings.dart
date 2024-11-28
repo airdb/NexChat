@@ -61,14 +61,21 @@ class MySettingsPage extends StatelessWidget {
             'Privacy',
             [
               ListTile(
-                title: const Text('Chat History'),
+                title: const Text('Friends Privacy'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
                   // Navigate to chat history settings
                 },
               ),
               ListTile(
-                title: const Text('Blocked Users'),
+                title: const Text('Personal Privacy List'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  // Navigate to blocked users
+                },
+              ),
+              ListTile(
+                title: const Text('Third Party Privacy Sharing'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
                   // Navigate to blocked users
@@ -110,7 +117,7 @@ class MySettingsPage extends StatelessWidget {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Text("版本1.0.0"),
+                    Text("Version1.0.0"),
                     Icon(Icons.chevron_right),
                   ],
                 ),
@@ -149,13 +156,13 @@ class MySettingsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+          padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
           child: Text(
             title,
             style: const TextStyle(
               color: Colors.grey,
-              fontSize: 14,
-              fontWeight: FontWeight.w200,
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
