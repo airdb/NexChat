@@ -41,6 +41,14 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
           text: 'This is a reply test message.',
           isUser: false,
         ));
+                _messages.add(ChatMessage(
+          text: 'This is a test2 message.',
+          isUser: true,
+        ));
+        _messages.add(ChatMessage(
+          text: 'This is a reply test2 message.',
+          isUser: false,
+        ));
       });
     });
   }
@@ -58,11 +66,15 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
     super.didChangeMetrics();
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
+        print('didChangeMetrics');
+        if (_scrollController.hasClients) {
+          print('didChangeMetrics hasClients');
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
       });
     }
   }
@@ -82,58 +94,62 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
               },
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-              top: 24,
-              left: 24,
-              right: 24,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(top: BorderSide(color: Colors.grey.shade100)),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message...',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide(color: Colors.grey.shade200),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide(color: Colors.grey.shade200),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      fillColor: Colors.grey.shade50,
-                      filled: true,
-                    ),
-                    minLines: 1,
-                    maxLines: 4,
-                    onSubmitted: _handleSubmitted,
-                  ),
+          _buildMessageInput(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessageInput() {
+    return Container(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+        top: 24,
+        left: 24,
+        right: 24,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Colors.grey.shade100)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _messageController,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)?.chatInputHint ?? 'Send a message...',
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
                 ),
-                const SizedBox(width: 12),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => _handleSubmitted(_messageController.text),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(
-                    minWidth: 32,
-                    minHeight: 32,
-                  ),
-                  color: const Color(0xFF1677ff),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
                 ),
-              ],
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                fillColor: Colors.grey.shade50,
+                filled: true,
+              ),
+              minLines: 1,
+              maxLines: 4,
+              onSubmitted: _handleSubmitted,
             ),
+          ),
+          const SizedBox(width: 12),
+          IconButton(
+            icon: const Icon(Icons.send),
+            onPressed: () => _handleSubmitted(_messageController.text),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(
+              minWidth: 32,
+              minHeight: 32,
+            ),
+            color: const Color(0xFF1677ff),
           ),
         ],
       ),

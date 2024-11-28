@@ -63,7 +63,7 @@ class ContactPage extends StatelessWidget {
                   ContactListItem(
                     icon: Icons.business_center_outlined,
                     color: Colors.blue,
-                    title: l10n.contactBusinessContacts,
+                    title: l10n.contactBusinessAccounts,
                   ),
                   GroupTitle(title: l10n.contactCompanyOrShop),
                   ContactListItem(
@@ -72,7 +72,7 @@ class ContactPage extends StatelessWidget {
                     title: l10n.contactCompany,
                   ),
                   ContactListItem(
-                    icon: Icons.shopping_bag_outlined,
+                    icon: Icons.shopping_cart_outlined,
                     color: Colors.purple,
                     title: l10n.contactShop,
                   ),
@@ -80,11 +80,6 @@ class ContactPage extends StatelessWidget {
                     icon: Icons.store_outlined,
                     color: Colors.red,
                     title: l10n.contactStore,
-                  ),
-                  ContactListItem(
-                    icon: Icons.shopping_cart_outlined,
-                    color: Colors.red,
-                    title: l10n.contactMerchant,
                   ),
                 ],
               ),
