@@ -228,8 +228,7 @@ class ChatMessageWidget extends StatelessWidget {
           if (message.isMe) ...[
             const SizedBox(width: 8),
             CircleAvatar(
-              // backgroundImage: NetworkImage('您的头像URL'), // TODO: 替换为实际的用户头像
-              child: Image.asset('assets/avatar/my_avatar.png'),
+              backgroundImage: AssetImage('assets/avatar/my_avatar.png'),
               radius: 20,
             ),
           ],

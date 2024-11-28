@@ -24,6 +24,15 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
                 'Hello, I am AI Assistant. How can I help you?',
           isUser: false,
         ));
+        _messages.add(ChatMessage(
+          text: 'I need your help.',
+          isUser: true,
+        ));
+        _messages.add(ChatMessage(
+          text: AppLocalizations.of(context)?.chatbotWelcomeMessage ?? 
+                'Sure, I will help you.',
+          isUser: false,
+        ));
       });
     });
   }
@@ -41,13 +50,11 @@ class _ChatbotPageState extends State<ChatbotPage> with WidgetsBindingObserver {
     super.didChangeMetrics();
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_scrollController.hasClients) {
-          _scrollController.animateTo(
-            _scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
-        }
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
       });
     }
   }
@@ -184,7 +191,7 @@ class ChatMessage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 16.0),
               child: CircleAvatar(
-                child: Image.asset('assets/avatar/chatbot_avatar.png'),
+                backgroundImage: AssetImage('assets/avatar/chatbot_avatar.png'),
               ),
             ),
           Flexible(
@@ -201,7 +208,7 @@ class ChatMessage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(left: 16.0),
               child: CircleAvatar(
-                child: Image.asset('assets/avatar/my_avatar.png'),
+                backgroundImage: AssetImage('assets/avatar/my_avatar.png'),
                 radius: 20,
               ),
             ),
