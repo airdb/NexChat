@@ -21,7 +21,7 @@ class MySettingsPage extends StatelessWidget {
       body: ListView(
         children: [
           _buildSection(
-            'App Icon',
+            'General',
             [
               ListTile(
                 title: Text('App Icon'),
@@ -35,11 +35,6 @@ class MySettingsPage extends StatelessWidget {
                   );
                 },
               ),
-            ],
-          ),
-          _buildSection(
-            'General',
-            [
               ListTile(
                 title: Text(AppLocalizations.of(context)!.appLanguage),
                 trailing: Consumer<LocaleProvider>(
@@ -100,6 +95,50 @@ class MySettingsPage extends StatelessWidget {
               ),
             ],
           ),
+          _buildSection(
+            'About',
+            [
+              ListTile(
+                title: const Text('Feedback'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  // Navigate to feedback
+                },
+              ),
+              ListTile(
+                title: const Text('About'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text("版本1.0.0"),
+                    Icon(Icons.chevron_right),
+                  ],
+                ),
+                onTap: () {
+                  // Navigate to about
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ListTile(
+            title: const Text(
+              'Switch Account',
+              textAlign: TextAlign.center,
+            ),            
+            onTap: () {
+              // TODO: switch account
+            },
+          ),
+          ListTile(
+            title: const Text(
+              'Logout',
+              textAlign: TextAlign.center,
+            ),
+            onTap: () {
+              // TODO: logout
+            },
+          ),
         ],
       ),
     );
@@ -110,13 +149,13 @@ class MySettingsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
           child: Text(
             title,
             style: const TextStyle(
               color: Colors.grey,
               fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w200,
             ),
           ),
         ),
