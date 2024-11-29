@@ -26,4 +26,28 @@ class ConfigService {
   static Future<String> getBaseUrl() async {
     return await getConfig('base_url');
   }
+
+  static Future<void> setCacheDir(String cacheDir) async {
+    await saveConfig('cache_dir', cacheDir);
+  }
+
+  static Future<String> getCacheDir() async {
+    return await getConfig('cache_dir');
+  }
+
+  static Future<void> setMiniProgramDir(String dir) async {
+    await saveConfig('mini_program_dir', dir);
+  }
+
+  static Future<String> getMiniProgramDir() async {
+    return await getConfig('mini_program_dir');
+  }
+
+  static Future<void> setMiniProgramBaseUrl(String appId) async {
+    await saveConfig('mini_program_base_url', 'https://airdb.tech/apis/mini/download');
+  }
+
+  static Future<String> getMiniProgramBaseUrl() async {
+    return await getConfig('mini_program_base_url');
+  }
 }
