@@ -78,6 +78,8 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>需要使用相机来扫描二维码</string>
+	<string>需要使用相机��扫描二维码</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要访问相册以扫描二维码图片</string>
 </dict>
 </plist>

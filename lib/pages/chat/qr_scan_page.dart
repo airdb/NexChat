@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:scan/scan.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({super.key});
@@ -28,6 +30,31 @@ class _QRScanPageState extends State<QRScanPage> {
         const SnackBar(content: Text('需要相机权限才能扫描二维码')),
       );
       Navigator.pop(context);
+    }
+  }
+
+  Future<void> _scanImageFromGallery() async {
+    // 检查相册权限
+    final status = await Permission.photos.request();
+    if (status.isDenied) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('需要相册权限才能选择二维码图片')),
+      );
+      return;
+    }
+    
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    
+    if (image != null) {
+      final String? result = await Scan.parse(image.path);
+      if (result != null) {
+        Navigator.pop(context, result);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('未在图片中找到二维码')),
+        );
+      }
     }
   }
 
@@ -142,7 +169,11 @@ class _QRScanPageState extends State<QRScanPage> {
                     children: [
                       _buildBottomButton(Icons.person, '我的二维码'),
                       SizedBox(width: 100),
-                      _buildBottomButton(Icons.photo_library, '相册'),
+                      _buildBottomButton(
+                        Icons.photo_library, 
+                        '相册',
+                        onTap: _scanImageFromGallery,
+                      ),
                     ],
                   ),
                 ],
@@ -154,20 +185,23 @@ class _QRScanPageState extends State<QRScanPage> {
     );
   }
 
-  Widget _buildBottomButton(IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: Colors.white, size: 28),
-        SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
+  Widget _buildBottomButton(IconData icon, String label, {VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: 28),
+          SizedBox(height: 8),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
