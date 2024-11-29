@@ -46,7 +46,7 @@ class MyAccountPage extends StatelessWidget {
       body: ListView(
         children: [
           _buildListTile(
-            title: 'WeChat ID',
+            title: 'NexChat ID',
             trailing: 'bumu',
           ),
           _buildListTile(
@@ -54,7 +54,7 @@ class MyAccountPage extends StatelessWidget {
             trailing: '89****76',
           ),
           _buildListTile(
-            title: 'WeChat Password',
+            title: 'NexChat Password',
             trailing: 'Set',
           ),
           _buildListTile(
@@ -78,13 +78,13 @@ class MyAccountPage extends StatelessWidget {
             trailing: 'Manage',
             ),
           _buildListTile(
-            title: 'WeChat Security Center',
+            title: 'NexChat Security Center',
             trailing: 'Manage',
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'If you encounter account security issues such as password leaks, theft, or fraud, please visit the WeChat Security Center',
+              'If you encounter account security issues such as password leaks, theft, or fraud, please visit the NexChat Security Center',
               style: TextStyle(
                 color: Colors.grey[600],
                 fontSize: 12,
