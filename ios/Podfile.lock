@@ -1,10 +1,14 @@
 PODS:
+  - device_info_plus (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_share (0.0.1):
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
   - MTBBarcodeScanner (5.0.11)
+  - network_info_plus (0.0.1):
+    - Flutter
   - permission_handler_apple (9.3.0):
     - Flutter
   - qr_code_scanner (0.2.0):
@@ -14,9 +18,11 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_share (from `.symlinks/plugins/flutter_share/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - scan (from `.symlinks/plugins/scan/ios`)
@@ -26,12 +32,16 @@ SPEC REPOS:
     - MTBBarcodeScanner
 
 EXTERNAL SOURCES:
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
     :path: Flutter
   flutter_share:
     :path: ".symlinks/plugins/flutter_share/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  network_info_plus:
+    :path: ".symlinks/plugins/network_info_plus/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   qr_code_scanner:
@@ -40,10 +50,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/scan/ios"
 
 SPEC CHECKSUMS:
+  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_share: 4be0208963c60b537e6255ed2ce1faae61cd9ac2
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
+  network_info_plus: 6613d9d7cdeb0e6f366ed4dbe4b3c51c52d567a9
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   scan: aea35bb4aa59ccc8839c576a18cd57c7d492cc86

@@ -17,6 +17,8 @@ import 'pages/chatbot/index.dart';
 import 'pages/profile/payment_code_page.dart';
 import 'pages/chat/chat_mini_program.dart';
 import 'pages/chat/qr_scan_page.dart';
+import 'system/device_info.dart';
+import 'services/heartbeat.dart';
 
 void main() {
   runApp(
@@ -125,7 +127,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Map<String, String> deviceInfo;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      HeartbeatService().startHeartbeat(context);
+    });
+  }
 
   String _getTitle(AppLocalizations localizations) {
     switch (_selectedIndex) {
