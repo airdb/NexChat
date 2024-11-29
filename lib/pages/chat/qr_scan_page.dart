@@ -23,7 +23,12 @@ class _QRScanPageState extends State<QRScanPage> {
   }
 
   Future<void> _requestCameraPermission() async {
+  print('Camera: ${await Permission.camera.status}');
+    print('Camera permanently denied: ${await Permission.camera.isPermanentlyDenied}');
+    // print('Camera service status: ${await Permission.camera.serviceStatus}');
+
     final status = await Permission.camera.request();
+    print("Camera permission status: $status");
     if (status.isDenied) {
       // 用户拒绝了权限
       ScaffoldMessenger.of(context).showSnackBar(
