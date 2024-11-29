@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({super.key});
@@ -12,6 +13,23 @@ class _QRScanPageState extends State<QRScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   bool isFlashOn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _requestCameraPermission();
+  }
+
+  Future<void> _requestCameraPermission() async {
+    final status = await Permission.camera.request();
+    if (status.isDenied) {
+      // 用户拒绝了权限
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('需要相机权限才能扫描二维码')),
+      );
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +65,32 @@ class _QRScanPageState extends State<QRScanPage> {
             ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.4,
+            top: MediaQuery.of(context).size.height * 0.5 + 150,
             left: 0,
             right: 0,
-            child: GestureDetector(
-              onTap: _toggleFlash,
-              child: Column(
-                children: [
-                  Icon(
-                    isFlashOn ? Icons.flashlight_off : Icons.flashlight_on,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '轻触照亮',
-                    style: TextStyle(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: Colors.black26,
+              child: GestureDetector(
+                onTap: _toggleFlash,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isFlashOn ? Icons.flashlight_off : Icons.flashlight_on,
                       color: Colors.white,
-                      fontSize: 14,
+                      size: 24,
                     ),
-                  ),
-                ],
+                    SizedBox(height: 4),
+                    Text(
+                      '轻触照亮',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

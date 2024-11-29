@@ -77,5 +77,7 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>需要使用相机来扫描二维码</string>
 </dict>
 </plist>
