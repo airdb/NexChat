@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class ChatPopupMenu extends StatelessWidget {
+  final String? content;
+  final Function()? onDelete;
+  final Function()? onFavorite;
+
   const ChatPopupMenu({
     super.key,
+    this.content,
+    this.onDelete,
+    this.onFavorite,
   });
 
   @override
@@ -16,15 +25,25 @@ class ChatPopupMenu extends StatelessWidget {
             icon: Icons.copy,
             label: '复制',
             onTap: () {
-              // TODO: 实现复制功能
+              if (content != null) {
+                Clipboard.setData(ClipboardData(text: content!));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('已复制到剪贴板')),
+                );
+              }
               Navigator.pop(context);
             },
           ),
           _buildActionButton(
             icon: Icons.share,
             label: '转发',
-            onTap: () {
-              // TODO: 实现转发功能
+            onTap: () async {
+              if (content != null) {
+                await FlutterShare.share(
+                  title: '分享对话',
+                  text: content!,
+                );
+              }
               Navigator.pop(context);
             },
           ),
@@ -32,7 +51,9 @@ class ChatPopupMenu extends StatelessWidget {
             icon: Icons.bookmark,
             label: '收藏',
             onTap: () {
-              // TODO: 实现收藏功能
+              if (onFavorite != null) {
+                onFavorite!();
+              }
               Navigator.pop(context);
             },
           ),
@@ -40,7 +61,9 @@ class ChatPopupMenu extends StatelessWidget {
             icon: Icons.delete,
             label: '删除',
             onTap: () {
-              // TODO: 实现删除功能
+              if (onDelete != null) {
+                onDelete!();
+              }
               Navigator.pop(context);
             },
           ),

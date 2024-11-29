@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'chat_popup.dart';
+import '../../widgets/keyboard.dart';
+import '../../widgets/chat_popup.dart';
+
 
 class ChatScreen extends StatefulWidget {
   final String contactName;
@@ -40,13 +42,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   void didChangeMetrics() {
     super.didChangeMetrics();
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      });
+      KeyboardUtil.scrollToBottom(scrollController: _scrollController);
     }
   }
 
@@ -63,13 +59,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       );
     });
     _messageController.clear();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
+    KeyboardUtil.scrollToBottom(scrollController: _scrollController);
   }
 
   @override
