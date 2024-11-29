@@ -42,6 +42,8 @@ class SimCardInfo {
     return await getSimCardCount(context) == 2;
   }
 
+  
+
   static Future<Map<String, dynamic>> getSimCardInfo(BuildContext context) async {
     return {
         "simCardCount": await getSimCardCount(context),

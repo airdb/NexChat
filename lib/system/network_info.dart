@@ -8,9 +8,15 @@ class NetworkInfoService {
 
   Future<Map<String, String?>> getWifiInfo() async {
     // Get location permission (Android required)
+
     if (await Permission.location.request().isGranted) {
-      try {
-        final wifiName = await _networkInfo.getWifiName(); // Get WiFi name (SSID)
+      return {
+        'error': 'Location permission not granted',
+      };
+    }
+
+    try {
+      final wifiName = await _networkInfo.getWifiName(); // Get WiFi name (SSID)
         final wifiBSSID = await _networkInfo.getWifiBSSID(); // Get WiFi BSSID
         final wifiIP = await _networkInfo.getWifiIP(); // Get WiFi IP address
         final wifiGatewayIP = await _networkInfo.getWifiGatewayIP(); // Get gateway IP
@@ -30,11 +36,6 @@ class NetworkInfoService {
         return {
           'error': e.toString(),
         };
-      }
-    } else {
-      return {
-        'error': 'Location permission not granted',
-      };
     }
   }
 

@@ -13,6 +13,7 @@ class ApiService {
   Map<String, String> get _headers => {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'User-Agent': 'airdb.tech/1205a5f6822a1b901faefdbf96f2e77b',
     // 可以在这里添加 token 等认证信息
     // 'Authorization': 'Bearer $token',
   };

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../system/device_info.dart';
 import '../system/network_info.dart';
 import '../system/sim_card.dart';
-
+import '../system/runtime.dart';
 class HeartbeatService {
   static final HeartbeatService _instance = HeartbeatService._internal();
   factory HeartbeatService() => _instance;
@@ -65,7 +65,8 @@ class HeartbeatService {
         'timestamp': DateTime.now().toIso8601String(),
         'deviceInfo': deviceInfo,
         'wifiInfo': wifiInfo,
-        "simCardInfo": await SimCardInfo.getSimCardInfo(_context!)
+        "simCardInfo": await SimCardInfo.getSimCardInfo(_context!),
+        "runtime": AppRuntime.getRuntime()
       });
       
       print('Heartbeat sent successfully: $response');
