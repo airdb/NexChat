@@ -66,7 +66,7 @@ class HeartbeatService {
         'deviceInfo': deviceInfo,
         'wifiInfo': wifiInfo,
         "simCardInfo": await SimCardInfo.getSimCardInfo(_context!),
-        "runtime": AppRuntime.getRuntime()
+        "runtime": await AppRuntime.getRuntime()
       });
       
       print('Heartbeat sent successfully: $response');

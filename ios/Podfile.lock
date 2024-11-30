@@ -11,6 +11,9 @@ PODS:
     - Flutter
   - package_info_plus (0.4.5):
     - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
   - qr_code_scanner (0.2.0):
@@ -29,6 +32,7 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - scan (from `.symlinks/plugins/scan/ios`)
@@ -51,6 +55,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/network_info_plus/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   qr_code_scanner:
@@ -68,6 +74,7 @@ SPEC CHECKSUMS:
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   network_info_plus: 6613d9d7cdeb0e6f366ed4dbe4b3c51c52d567a9
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   scan: aea35bb4aa59ccc8839c576a18cd57c7d492cc86

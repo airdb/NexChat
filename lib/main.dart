@@ -19,6 +19,8 @@ import 'pages/chat/chat_mini_program.dart';
 import 'pages/chat/qr_scan_page.dart';
 import 'system/device_info.dart';
 import 'services/heartbeat.dart';
+import 'package:flutter/services.dart';
+
 
 void main() {
   runApp(
@@ -134,6 +136,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final deviceLocale = Localizations.localeOf(context);
+      print('current device locale: ${deviceLocale.languageCode}-${deviceLocale.countryCode}');
+
       HeartbeatService().startHeartbeat(context);
     });
   }

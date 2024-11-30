@@ -50,4 +50,6 @@ class ConfigService {
   static Future<String> getMiniProgramBaseUrl() async {
     return await getConfig('mini_program_base_url');
   }
+
+
 }

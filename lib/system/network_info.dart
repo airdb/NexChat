@@ -7,9 +7,8 @@ class NetworkInfoService {
   static const platform = MethodChannel('wifi_signal_strength');
 
   Future<Map<String, String?>> getWifiInfo() async {
-    // Get location permission (Android required)
-
-    if (await Permission.location.request().isGranted) {
+    // Fix permission check logic (it was inverted)
+    if (!await Permission.location.request().isGranted) {
       return {
         'error': 'Location permission not granted',
       };
@@ -21,7 +20,12 @@ class NetworkInfoService {
         final wifiIP = await _networkInfo.getWifiIP(); // Get WiFi IP address
         final wifiGatewayIP = await _networkInfo.getWifiGatewayIP(); // Get gateway IP
         final wifiSubmask = await _networkInfo.getWifiSubmask(); // Get subnet mask
-        final signalStrength = await getWifiSignalStrength(); // await the result
+        int? signalStrength;
+        try {
+          signalStrength = await getWifiSignalStrength();
+        } catch (e) {
+          print('Signal strength not available: $e');
+        }
 
         return {
           'ssid': wifiName,
@@ -29,7 +33,7 @@ class NetworkInfoService {
           'ip': wifiIP,
           'gateway': wifiGatewayIP,
           'subnet': wifiSubmask,
-          'strength': signalStrength?.toString(), // convert to String
+          'strength': signalStrength?.toString(),
         };
       } catch (e) {
         print('Failed to get WiFi info: $e');
