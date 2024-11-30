@@ -87,5 +87,7 @@
 	<string>需要位置权限以获取WiFi信息</string>
 	<key>NSPasteboardUsageDescription</key>
 	<string>需要访问剪贴板以支持复制粘贴功能</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>我们需要使用Face ID来验证您的身份</string>
 </dict>
 </plist>
