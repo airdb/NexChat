@@ -136,8 +136,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 获取当前语言
       final deviceLocale = Localizations.localeOf(context);
-      print('current device locale: ${deviceLocale.languageCode}-${deviceLocale.countryCode}');
+      print('Current locale: ${deviceLocale.languageCode}-${deviceLocale.countryCode}');
+
+      // 获取系统语言优先级列表
+      final List<Locale> systemLocales = WidgetsBinding.instance.window.locales;
+      for (var locale in systemLocales) {
+        print('Preferred locale: ${locale.languageCode}-${locale.countryCode}');
+      }
 
       HeartbeatService().startHeartbeat(context);
     });

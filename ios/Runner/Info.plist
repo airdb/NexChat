@@ -85,5 +85,7 @@
 	<string>需要位置权限以获取WiFi信息</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>需要位置权限以获取WiFi信息</string>
+	<key>NSPasteboardUsageDescription</key>
+	<string>需要访问剪贴板以支持复制粘贴功能</string>
 </dict>
 </plist>
