@@ -73,5 +73,7 @@
   "chatScanQr": "扫一扫",
   "chatPayment": "收付款",
 
-  "miniProgramRecent": "最近"
+  "miniProgramRecent": "最近",
+  "paymentHistoryBankCards": "银行卡",
+  "paymentHistoryRelativeCards": "亲属卡"
 } 

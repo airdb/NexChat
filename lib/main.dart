@@ -20,6 +20,7 @@ import 'pages/chat/qr_scan_page.dart';
 import 'system/device_info.dart';
 import 'services/heartbeat.dart';
 import 'package:flutter/services.dart';
+import 'pages/payment/history.dart';
 
 
 void main() {
@@ -103,6 +104,7 @@ class MyApp extends StatelessWidget {
         '/profile/payment_code': (context) => const PaymentCodePage(),
         '/chat/mini_program': (context) => const ChatMiniProgramPage(),
         '/chat/qr_scan_page': (context) => const QRScanPage(),
+        '/payment/history': (context) => const PaymentHistoryPage(),
       },
       locale: Provider.of<LocaleProvider>(context).locale,
       supportedLocales: AppLocalizations.supportedLocales,

@@ -72,5 +72,7 @@
   "chatScanQr": "Scan QR",
   "chatPayment": "Payment",
 
-  "miniProgramRecent": "Recent"
+  "miniProgramRecent": "Recent",
+  "paymentHistoryBankCards": "Bank Cards",
+  "paymentHistoryRelativeCards": "Relative Cards"
 } 
