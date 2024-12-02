@@ -225,14 +225,44 @@ class _QRScanPageState extends State<QRScanPage> {
       print('scanData===: ${scanData.code}');
       if (scanData.code != null) {
         controller.pauseCamera();
+
         Future.delayed(Duration(milliseconds: 100), () {
-          if (Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
+          identifyPaymentType(scanData.code!);
         });
         // Navigator.pop(context, scanData.code);
       }
     });
+  }
+
+ void identifyPaymentType(String scanData) {
+  final code = scanData.toLowerCase();
+
+  if (code.startsWith('paynow')) {
+    // PayNow QR
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  } else if (code.startsWith('https://qr.alipay.com')) {
+    // Alipay QR
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  } else if (code.startsWith('https://u.wechat.com')) {
+    // Weixin User QR
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  } else if (code.startsWith('wxp://f2f6Ot7CKDr4Ia_4L_zMFVWzkkAN9ukglcumERxAHLVlowY')) {
+    // Weixin Pay
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  } else {
+    // Default: URL (https://aridb.com/qr)
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+      }
+    }
   }
 
   @override
@@ -240,4 +270,4 @@ class _QRScanPageState extends State<QRScanPage> {
     controller?.dispose();
     super.dispose();
   }
-} 
+}
