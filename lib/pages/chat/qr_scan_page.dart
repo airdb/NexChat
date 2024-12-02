@@ -35,6 +35,7 @@ class _QRScanPageState extends State<QRScanPage> {
         const SnackBar(content: Text('需要相机权限才能扫描二维码')),
       );
       Navigator.pop(context);
+      
     }
   }
 
@@ -221,9 +222,15 @@ class _QRScanPageState extends State<QRScanPage> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
+      print('scanData===: ${scanData.code}');
       if (scanData.code != null) {
         controller.pauseCamera();
-        Navigator.pop(context, scanData.code);
+        Future.delayed(Duration(milliseconds: 100), () {
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          }
+        });
+        // Navigator.pop(context, scanData.code);
       }
     });
   }
