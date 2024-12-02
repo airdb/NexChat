@@ -15,6 +15,7 @@ class _QRScanPageState extends State<QRScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   bool isFlashOn = false;
+  bool _isProcessing = false;
 
   @override
   void initState() {
@@ -222,24 +223,34 @@ class _QRScanPageState extends State<QRScanPage> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      print('scanData===: ${scanData.code}');
-      if (scanData.code != null) {
+      if (scanData.code != null && !_isProcessing) {
+        _isProcessing = true;
         controller.pauseCamera();
-
+        
         Future.delayed(Duration(milliseconds: 100), () {
           identifyPaymentType(scanData.code!);
         });
-        // Navigator.pop(context, scanData.code);
       }
     });
   }
 
- void identifyPaymentType(String scanData) {
-  final code = scanData.toLowerCase();
+ void identifyPaymentType(String code) {
+    _isProcessing = false;
+    print('scan handle: ${code}');
 
-  if (code.startsWith('paynow')) {
+  if (code.contains('SG.PAYNOW')) {
     // PayNow QR
-    if (Navigator.canPop(context)) {
+      Map<String, dynamic> parsedData = parseSGQR(code);
+      String? uen = extractUEN(parsedData["26"]);
+
+      print('Payload Format Indicator: ${parsedData["00"]}');
+      print('Point of Initiation Method: ${parsedData["01"]}');
+      print('Merchant Account(UEN): $uen');
+      print('Currency: ${parsedData["53"]}');
+      print('Amount: ${parsedData["54"]}');
+      print('Merchant Name: ${parsedData["59"]}');
+      print('Merchant City: ${parsedData["60"]}');
+      if (Navigator.canPop(context)) {
       Navigator.pop(context);
     }
   } else if (code.startsWith('https://qr.alipay.com')) {
@@ -263,6 +274,43 @@ class _QRScanPageState extends State<QRScanPage> {
       Navigator.pop(context);
       }
     }
+    _isProcessing = false;
+  }
+
+
+Map<String, dynamic> parseSGQR(String sgqrData) {
+  Map<String, dynamic> result = {};
+
+  RegExp regExp = RegExp(r'(\d{2})(\d{2})(.+)');
+  while (sgqrData.isNotEmpty) {
+    final match = regExp.matchAsPrefix(sgqrData);
+    if (match == null) break;
+
+    String tag = match.group(1)!;
+    int length = int.parse(match.group(2)!);
+    String value = match.group(3)!.substring(0, length);
+
+    // 存储解析结果
+    result[tag] = value;
+
+    // 截取剩余数据
+    sgqrData = match.group(3)!.substring(length);
+  }
+
+    return result;
+  }
+
+
+  String? extractUEN(String merchantAccount) {
+  RegExp regExp = RegExp(r'02(\d{2})(.+)');
+  Match? match = regExp.firstMatch(merchantAccount);
+
+  if (match != null) {
+    int length = int.parse(match.group(1)!); // 获取长度
+    String value = match.group(2)!.substring(0, length); // 提取值
+    return value;
+  }
+    return null; // 未找到时返回 null
   }
 
   @override
