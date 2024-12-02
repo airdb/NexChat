@@ -3,6 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:scan/scan.dart';
+import 'qr_payment.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({super.key});
@@ -238,8 +239,8 @@ class _QRScanPageState extends State<QRScanPage> {
     _isProcessing = false;
     print('scan handle: ${code}');
 
-  if (code.contains('SG.PAYNOW')) {
-    // PayNow QR
+    if (code.contains('SG.PAYNOW')) {
+      // PayNow QR
       Map<String, dynamic> parsedData = parseSGQR(code);
       String? uen = extractUEN(parsedData["26"]);
 
@@ -251,8 +252,19 @@ class _QRScanPageState extends State<QRScanPage> {
       print('Merchant Name: ${parsedData["59"]}');
       print('Merchant City: ${parsedData["60"]}');
       if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => QRPaymentPage(
+              qrData: code,
+              paymentType: 'PAYNOW',
+              parsedData: parsedData,
+              recipientName: parsedData["59"],
+              recipientId: uen,
+            ),
+          ),
+        );
+      }
   } else if (code.startsWith('https://qr.alipay.com')) {
     // Alipay QR
     if (Navigator.canPop(context)) {
