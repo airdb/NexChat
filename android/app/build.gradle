@@ -42,3 +42,8 @@ android {
 flutter {
     source = "../.."
 }
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs.remove("-Xlint:-options.")
+    options.compilerArgs << "-Xlint:deprecation" // This will show deprecation warnings
+}

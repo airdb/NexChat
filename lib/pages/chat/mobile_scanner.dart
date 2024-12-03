@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:scan/scan.dart';
 import 'qr_payment.dart';
 import 'package:mobile_scanner/src/enums/torch_state.dart';
 
@@ -43,7 +42,6 @@ class _QRScanPageState extends State<QRScanPage> {
   }
 
   Future<void> _scanImageFromGallery() async {
-    // 检查相册权限
     final status = await Permission.photos.request();
     if (status.isDenied) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -56,13 +54,21 @@ class _QRScanPageState extends State<QRScanPage> {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     
     if (image != null) {
-      final String? result = await Scan.parse(image.path);
-      if (result != null) {
-        Navigator.pop(context, result);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('未在图片中找到二维码')),
-        );
+      final controller = MobileScannerController();
+      try {
+        final result = await controller.analyzeImage(image.path);
+        if (result != null && result.barcodes.isNotEmpty) {
+          final String? code = result.barcodes.first.rawValue;
+          if (code != null) {
+            identifyPaymentType(code);
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('未在图片中找到二维码')),
+          );
+        }
+      } finally {
+        controller.dispose();
       }
     }
   }
