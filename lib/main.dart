@@ -20,6 +20,7 @@ import 'pages/chat/mobile_scanner.dart';
 import 'system/device_info.dart';
 import 'services/heartbeat.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_popup/flutter_popup.dart';
 
 
 void main() {
@@ -233,72 +234,44 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(_getTitle(localizations)),
           actions: [
-            PopupMenuButton<int>(
-              icon: const Icon(Icons.add_circle_outline),
-              offset: const Offset(0, 20),
-              position: PopupMenuPosition.under,
-              color: Colors.black,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            CustomPopup(
+              barrierColor: Colors.black12,
+              backgroundColor: Colors.black,
+              contentPadding: const EdgeInsets.symmetric(vertical: 8),
+              contentDecoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(8.0),
               ),
-              onSelected: (value) {
-                switch (value) {
-                  case 0:
-                    print(localizations.chatStartGroupChat);
-                    break;
-                  case 1:
-                    print(localizations.chatAddFriend);
-                    break;
-                  case 2:
-                    Navigator.pushNamed(context, '/chat/qr_scan_page');
-                    break;
-                  case 3:
-                    print(localizations.chatPayment);
-                    break;
-                }
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 0,
-                  child: ListTile(
-                    leading: const Icon(Icons.chat, color: Colors.white),
-                    title: Text(
-                      localizations.chatStartGroupChat,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildPopupMenuItem(
+                    icon: Icons.chat,
+                    title: localizations.chatStartGroupChat,
+                    onTap: () => print(localizations.chatStartGroupChat),
                   ),
-                ),
-                PopupMenuItem(
-                  value: 1,
-                  child: ListTile(
-                    leading: const Icon(Icons.person_add, color: Colors.white),
-                    title: Text(
-                      localizations.chatAddFriend,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                  _buildPopupMenuItem(
+                    icon: Icons.person_add,
+                    title: localizations.chatAddFriend,
+                    onTap: () => print(localizations.chatAddFriend),
                   ),
-                ),
-                PopupMenuItem(
-                  value: 2,
-                  child: ListTile(
-                    leading: const Icon(Icons.qr_code_scanner, color: Colors.white),
-                    title: Text(
-                      localizations.chatScanQr,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                  _buildPopupMenuItem(
+                    icon: Icons.qr_code_scanner,
+                    title: localizations.chatScanQr,
+                    onTap: () => Navigator.pushNamed(context, '/chat/qr_scan_page'),
                   ),
-                ),
-                PopupMenuItem(
-                  value: 3,
-                  child: ListTile(
-                    leading: const Icon(Icons.payment, color: Colors.white),
-                    title: Text(
-                      localizations.chatPayment,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                  _buildPopupMenuItem(
+                    icon: Icons.payment,
+                    title: localizations.chatPayment,
+                    onTap: () => print(localizations.chatPayment),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.add_circle_outline),
+              ),
             ),
           ],
         );
@@ -315,5 +288,29 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(_getTitle(localizations)),
         );
     }
+  }
+
+  Widget _buildPopupMenuItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: Colors.white, size: 24),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -10,6 +10,9 @@ import '../pages/profile/my_settings.dart';
 import '../pages/profile/my_order.dart';
 import '../pages/profile/my_account.dart';
 import '../pages/explore/mini_program.dart';
+import '../pages/payment/history.dart';
+import '../pages/payment/add_card.dart';
+
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
     '/chat': (context) => const ChatPage(),
@@ -32,5 +35,7 @@ class Routes {
         sessionId: args['sessionId'] as String,
       );
     },
+    '/payment/history': (context) => const PaymentHistoryPage(),
+    '/payment/add-card': (context) => const AddCardPage(),
   };
 } 

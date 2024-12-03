@@ -85,6 +85,8 @@ class ProfileServicePage extends StatelessWidget {
         onTap: () {
           if (text == 'Payment') {
             Navigator.pushNamed(context, '/profile/payment_code');
+          } else if (text.startsWith('Wallet')) {
+            Navigator.pushNamed(context, '/payment/history');
           }
         },
         child: Column(
