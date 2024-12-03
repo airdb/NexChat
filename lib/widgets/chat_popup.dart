@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_share/flutter_share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ChatPopupMenu extends StatelessWidget {
   final String? content;
@@ -39,10 +39,7 @@ class ChatPopupMenu extends StatelessWidget {
             label: '转发',
             onTap: () async {
               if (content != null) {
-                await FlutterShare.share(
-                  title: '分享对话',
-                  text: content!,
-                );
+                await Share.share(content!);
               }
               Navigator.pop(context);
             },

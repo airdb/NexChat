@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:scan/scan.dart';
 import 'qr_payment.dart';
+import 'package:mobile_scanner/src/enums/torch_state.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({super.key});
@@ -14,7 +15,7 @@ class QRScanPage extends StatefulWidget {
 
 class _QRScanPageState extends State<QRScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
+  MobileScannerController? controller;
   bool isFlashOn = false;
   bool _isProcessing = false;
 
@@ -71,16 +72,21 @@ class _QRScanPageState extends State<QRScanPage> {
     return Scaffold(
       body: Stack(
         children: [
-          QRView(
-            key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
-            overlay: QrScannerOverlayShape(
-              borderColor: Colors.green,
-              borderRadius: 10,
-              borderLength: 30,
-              borderWidth: 10,
-              cutOutSize: 300,
-            ),
+          MobileScanner(
+            controller: controller ?? MobileScannerController(),
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              if (barcodes.isNotEmpty && !_isProcessing) {
+                _isProcessing = true;
+                controller?.stop();
+                
+                Future.delayed(Duration(milliseconds: 100), () {
+                  if (barcodes.first.rawValue != null) {
+                    identifyPaymentType(barcodes.first.rawValue!);
+                  }
+                });
+              }
+            },
           ),
           Positioned(
             top: MediaQuery.of(context).padding.top + 10,
@@ -214,28 +220,15 @@ class _QRScanPageState extends State<QRScanPage> {
   }
 
   void _toggleFlash() async {
-    await controller?.toggleFlash();
-    final flash = await controller?.getFlashStatus() ?? false;
-    setState(() {
-      isFlashOn = flash;
-    });
+    if (controller != null) {
+      await controller!.toggleTorch();
+      setState(() {
+        isFlashOn = !isFlashOn;  // Simply toggle the state
+      });
+    }
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      if (scanData.code != null && !_isProcessing) {
-        _isProcessing = true;
-        controller.pauseCamera();
-        
-        Future.delayed(Duration(milliseconds: 100), () {
-          identifyPaymentType(scanData.code!);
-        });
-      }
-    });
-  }
-
- void identifyPaymentType(String code) {
+  void identifyPaymentType(String code) {
     _isProcessing = false;
     print('scan handle: ${code}');
 

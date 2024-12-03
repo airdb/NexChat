@@ -16,7 +16,7 @@ import 'providers/locale_provider.dart';
 import 'pages/chatbot/index.dart';
 import 'pages/profile/payment_code_page.dart';
 import 'pages/chat/chat_mini_program.dart';
-import 'pages/chat/qr_scan_page.dart';
+import 'pages/chat/mobile_scanner.dart';
 import 'system/device_info.dart';
 import 'services/heartbeat.dart';
 import 'package:flutter/services.dart';

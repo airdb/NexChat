@@ -38,6 +38,7 @@ tasks:
     desc: Build Flutter app
     cmds:
       - flutter clean
+      - flutter gen-l10n
       - flutter pub get
       - flutter build apk --release
       - flutter build ios --release

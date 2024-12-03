@@ -36,11 +36,10 @@ dependencies:
   provider: ^6.1.1
   barcode_widget: ^2.0.3
   flutter_svg: ^2.0.9
-  qr_code_scanner: ^1.0.1
+  mobile_scanner:  ^6.0.0
   permission_handler: ^11.3.1
   image_picker: ^1.0.7
   scan: ^1.6.0
-  flutter_share: ^2.0.0
   device_info_plus: ^9.1.2
   network_info_plus: ^6.0.2
   shared_preferences: ^2.2.2
@@ -49,6 +48,7 @@ dependencies:
   local_auth: ^2.1.8
   http: ^1.1.0
   archive: ^3.4.9
+  share_plus: ^10.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
