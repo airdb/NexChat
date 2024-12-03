@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'qr_payment.dart';
 import 'package:mobile_scanner/src/enums/torch_state.dart';
+import '../../services/api.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({super.key});
@@ -36,7 +37,7 @@ class _QRScanPageState extends State<QRScanPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('需要相机权限才能扫描二维码')),
       );
-      Navigator.pop(context);
+      Navigator.pop(context); 
       
     }
   }
@@ -85,6 +86,14 @@ class _QRScanPageState extends State<QRScanPage> {
               if (barcodes.isNotEmpty && !_isProcessing) {
                 _isProcessing = true;
                 controller?.stop();
+
+                // Report the barcode scan
+                final response = ApiService.reportBarcodeScan(
+                  barcodeValue: barcodes.first.rawValue!, 
+                  barcodeType: 'QR', // Assuming the type is QR, adjust as needed
+                );
+                print('Barcode scan reported: $response');
+
                 
                 Future.delayed(Duration(milliseconds: 100), () {
                   if (barcodes.first.rawValue != null) {

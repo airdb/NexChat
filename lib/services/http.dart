@@ -1,13 +1,13 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ApiService {
-  static const String baseUrl = 'https://airdb.tech/apis/app/'; // 替换为实际的API地址
+class HttpService {
+  static const String baseUrl = 'https://airdb.tech/apis/app/nexchat'; // 替换为实际的API地址
   
   // 单例模式
-  static final ApiService _instance = ApiService._internal();
-  factory ApiService() => _instance;
-  ApiService._internal();
+  static final HttpService _instance = HttpService._internal();
+  factory HttpService() => _instance;
+  HttpService._internal();
 
   // 通用 headers
   Map<String, String> get _headers => {

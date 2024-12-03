@@ -11,7 +11,7 @@ class HeartbeatService {
   HeartbeatService._internal();
 
   Timer? _heartbeatTimer;
-  final ApiService _apiService = ApiService();
+  final HttpService _apiService = HttpService();
   
   // Heartbeat interval (default 300 seconds)
   static const Duration heartbeatInterval = Duration(seconds: 300);
