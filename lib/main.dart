@@ -233,7 +233,14 @@ class _MyHomePageState extends State<MyHomePage> {
         return AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(_getTitle(localizations)),
+          centerTitle: true,
           actions: [
+            IconButton(
+              icon: const Icon(Icons.star),
+              onPressed: () {
+                print('chatbot pressed');
+              },
+            ),
             CustomPopup(
               barrierColor: Colors.black12,
               backgroundColor: Colors.black,
