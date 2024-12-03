@@ -61,13 +61,15 @@ class HeartbeatService {
         wifiInfo = null;
       }
 
-      final response = await _apiService.post('/v1/heartbeat', body: {
+      final payload = {
         'timestamp': DateTime.now().toIso8601String(),
         'deviceInfo': deviceInfo,
         'wifiInfo': wifiInfo,
         "simCardInfo": await SimCardInfo.getSimCardInfo(_context!),
         "runtime": await AppRuntime.getRuntime()
-      });
+      }; 
+
+      final response = await _apiService.post('/v1/heartbeat', body: payload);
       
       print('Heartbeat sent successfully: $response');
     } catch (e) {

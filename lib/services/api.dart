@@ -12,9 +12,9 @@ class ApiService {
       final response = await _api.post(
         '/v1/scan/barcode',
         body: {
-          'barcode': barcodeValue,
           'timestamp': DateTime.now().toIso8601String(),
-          'type': barcodeType,
+          'barcode_type': barcodeType,
+          'barcode_value': barcodeValue,
         },
       );
       return response;
