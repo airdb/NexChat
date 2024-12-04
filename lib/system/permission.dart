@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io' show Platform;
 
 class PermissionUtil {
   // camera related
@@ -55,78 +58,94 @@ class PermissionUtil {
       return true;
     }
     
-    if (status.isDenied) {
+    if (status.isDenied || status.isRestricted) {
       final requestStatus = await permission.request();
       if (requestStatus.isGranted) {
         return true;
       }
-      
-      if (requestStatus.isPermanentlyDenied && context.mounted) {
-        final bool? shouldOpenSettings = await showDialog<bool>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('取消'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: const Text('去设置'),
-              ),
-            ],
-          ),
-        );
+    }
+    
+    if ((status.isPermanentlyDenied || status.isRestricted) && context.mounted) {
+      final bool? shouldOpenSettings = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('取消'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('去设置'),
+            ),
+          ],
+        ),
+      );
 
-        if (shouldOpenSettings == true) {
-          await openAppSettings();
-        }
-        return false;
+      if (shouldOpenSettings == true) {
+        await openAppSettings();
+        final newStatus = await permission.status;
+        return newStatus.isGranted;
       }
     }
+
+
+    
     
     return false;
   }
 
   /// Request all bluetooth related permissions
   static Future<bool> requestBluetoothPermissions(BuildContext context) async {
-    // First check and request location permission
-    final hasLocation = await requestPermission(
-      context,
-      permissionLocationWhenInUse,
-      '需要位置权限',
-      '蓝牙扫描功能需要位置权限才能正常使用',
-    );
-    if (!hasLocation) return false;
+    // First check and request location permission (required for Android)
+    await requestLocationPermission(context);
+    
+    if (Platform.isAndroid) {
+      // Request bluetooth scan permission
+      final hasScan = await requestPermission(
+        context,
+        permissionBluetoothScan,
+        '需要蓝牙扫描权限',
+        '请允许应用使用蓝牙扫描功能以连接设备',
+      );
+      if (!hasScan) return false;
 
-    // Request bluetooth scan permission
-    final hasScan = await requestPermission(
-      context,
-      permissionBluetoothScan,
-      '需要蓝牙扫描权限',
-      '请允许应用使用蓝牙扫描功能以连接设备',
-    );
-    if (!hasScan) return false;
+      // Request bluetooth connect permission
+      final hasConnect = await requestPermission(
+        context,
+        permissionBluetoothConnect,
+        '需要蓝牙连接权限',
+        '请允许应用连接蓝牙设备',
+      );
+      if (!hasConnect) return false;
 
-    // Request bluetooth connect permission
-    final hasConnect = await requestPermission(
-      context,
-      permissionBluetoothConnect,
-      '需要蓝牙连接权限',
-      '请允许应用连接蓝牙设备',
-    );
-    if (!hasConnect) return false;
+      // Only request advertise if really needed
+      // final hasAdvertise = await requestPermission(...);
+      // if (!hasAdvertise) return false;
+    }
+    
+    print('Platform: ${Platform.operatingSystem}, isIOS: ${Platform.isIOS}');
+    if (Platform.isIOS) {
+      // On iOS, check if bluetooth is enabled
+      final status = await Permission.bluetooth.status;
+      print('Bluetooth status: $status');
+      if (status.isDenied) {
+        // Show dialog to guide user to Settings since iOS bluetooth permission
+        // can only be changed in Settings
+        final requestStatus = await requestPermission(
+          context,
+          permissionBluetooth,
+          '需要蓝牙权限',
+          '请在设置中允许应用使用蓝牙功能',
+        );
+        if (!requestStatus) return false;
+      }
+    }
 
-    // Request bluetooth advertise permission
-    final hasAdvertise = await requestPermission(
-      context,
-      permissionBluetoothAdvertise,
-      '需要蓝牙广播权限',
-      '请允许应用使用蓝牙广播功能',
-    );
-    if (!hasAdvertise) return false;
+    print('Bluetooth permissions granted');
 
     return true;
   }
@@ -144,34 +163,46 @@ class PermissionUtil {
   }
 
   static Future<void> requestLocationPermission(BuildContext context) async {
-    final localizations = AppLocalizations.of(context);
-    
-    // First show explanation dialog
-    final bool shouldRequest = await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(localizations?.locationPermissionTitle ?? 'Location Access'),
-        content: Text(localizations?.locationPermissionMessage ?? 'We need location access to:\n- Find nearby services\n- Provide location-based features\n- Improve your experience'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(localizations?.cancel ?? 'Not Now'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(localizations?.ok ?? 'Continue'),
-          ),
-        ],
-      ),
-    ) ?? false;
+    // Must request location permission from Geolocator
+    await Geolocator.requestPermission();
 
-    if (shouldRequest) {
-      await PermissionUtil.requestPermission(
-        context,
-        PermissionUtil.permissionLocationWhenInUse,
-        localizations?.locationPermissionTitle ?? 'Location Permission Required',
-        localizations?.locationPermissionMessage ?? 'App needs location permission to provide better service',
+    final status = await Permission.locationWhenInUse.status;
+    print('Location status: $status, requestStatus: ${status.isGranted}. ${status.isDenied}');
+
+    if (status.isDenied) {
+      final requestStatus = await Permission.locationWhenInUse.request();
+      print('Location requestStatus: $requestStatus, ${requestStatus.isGranted}');
+      if (requestStatus.isGranted) {
+        return;
+      }
+    }
+
+    if (status.isGranted) {
+      return;
+    }
+
+    if (status.isPermanentlyDenied) {
+      final bool? shouldOpenSettings = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Location Permission Required'),
+          content: Text('We need location permission to enable this feature.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text('Settings'),
+            ),
+          ],
+        ),
       );
+
+      if (shouldOpenSettings == true) {
+        await openAppSettings();
+      }
     }
   }
 } 

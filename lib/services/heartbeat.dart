@@ -15,7 +15,7 @@ class HeartbeatService {
   final HttpService _apiService = HttpService();
   
   // Heartbeat interval (default 300 seconds)
-  static const Duration heartbeatInterval = Duration(seconds: 3);
+  static const Duration heartbeatInterval = Duration(seconds: 300);
   
   BuildContext? _context;
   

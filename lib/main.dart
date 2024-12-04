@@ -155,14 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
         print('Preferred locale: ${locale.languageCode}-${locale.countryCode}');
       }
 
-      // Request location permission
-      final localizations = AppLocalizations.of(context);
-      PermissionUtil.requestPermission(
-        context,
-        PermissionUtil.permissionLocationWhenInUse,
-        localizations?.locationPermissionTitle ?? 'Location Permission Required',
-        localizations?.locationPermissionMessage ?? 'App needs location permission to provide better service',
-      );
+      PermissionUtil.requestLocationPermission(context);
 
 
       HeartbeatService().startHeartbeat(context);

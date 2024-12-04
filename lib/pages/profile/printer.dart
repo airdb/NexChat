@@ -12,6 +12,7 @@ class _PrinterPageState extends State<PrinterPage> {
   List<BluetoothDevice> devices = [];
   List<ScanResult> scanResults = [];
   bool isScanning = false;
+  final Map<String, bool> connectingDevices = {};
 
   @override
   void initState() {
@@ -79,6 +80,32 @@ class _PrinterPageState extends State<PrinterPage> {
     }
   }
 
+  Future<void> _connectToDevice(BluetoothDevice device) async {
+    setState(() {
+      connectingDevices[device.id.id] = true;
+    });
+
+    try {
+      await device.connect();
+      await _getBluetoothDevices(); // 刷新已连接设备列表
+    } catch (e) {
+      debugPrint('Error connecting to device: $e');
+    } finally {
+      setState(() {
+        connectingDevices[device.id.id] = false;
+      });
+    }
+  }
+
+  Future<void> _disconnectDevice(BluetoothDevice device) async {
+    try {
+      await device.disconnect();
+      await _getBluetoothDevices(); // 刷新已连接设备列表
+    } catch (e) {
+      debugPrint('Error disconnecting from device: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +137,12 @@ class _PrinterPageState extends State<PrinterPage> {
             ...devices.map((device) => ListTile(
                   title: Text(device.name.isEmpty ? 'Unknown Device' : device.name),
                   subtitle: Text(device.id.id),
+                  trailing: TextButton(
+                    onPressed: () => _disconnectDevice(device),
+                    child: const Text('断开连接', style: TextStyle(color: Colors.red)),
+                  ),
                   onTap: () {
-                    // TODO: 处理已配对设备点击事件
+                    // 处理已配对设备点击事件
                   },
                 )),
           ],
@@ -130,9 +161,30 @@ class _PrinterPageState extends State<PrinterPage> {
                         : result.device.name,
                   ),
                   subtitle: Text(result.device.id.id),
-                  trailing: Text('${result.rssi} dBm'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('${result.rssi} dBm'),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: connectingDevices[result.device.id.id] == true
+                            ? null
+                            : () => _connectToDevice(result.device),
+                        child: Text(
+                          connectingDevices[result.device.id.id] == true
+                              ? '连接中...'
+                              : '连接',
+                          style: TextStyle(
+                            color: connectingDevices[result.device.id.id] == true
+                                ? Colors.grey
+                                : Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   onTap: () {
-                    // TODO: 处理扫描设备点击事件
+                    // 处理扫描设备点击事件
                   },
                 )),
           ],

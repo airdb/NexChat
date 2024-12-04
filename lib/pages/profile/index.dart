@@ -109,9 +109,9 @@ class ProfilePage extends StatelessWidget {
             iconColor: Colors.purple,
             title: "Printer",
             onTap: () async {
-              final hasPermission = await PermissionUtil.requestBluetoothPermissions(context);
-              print("Debug: hasPermission: $hasPermission, context.mounted: ${context.mounted}");
-              if (hasPermission && context.mounted) {
+              bool hasPermission = await PermissionUtil.requestBluetoothPermissions(context);
+              hasPermission = true;
+              if (hasPermission) {
                 Navigator.pushNamed(context, '/profile/printer');
               }
             },
