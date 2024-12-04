@@ -40,7 +40,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'NexChat',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: const [
+        AppLocalizations.delegate, // 添加本地化委托
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // 英文
+        Locale('zh'), // 中文
+      ],
+      locale: const Locale('en'), // 默认语言
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -113,8 +124,8 @@ class MyApp extends StatelessWidget {
         '/chat/mini_program': (context) => const ChatMiniProgramPage(),
         '/chat/qr_scan_page': (context) => const QRScanPage(),
       },
-      locale: Provider.of<LocaleProvider>(context).locale,
-      supportedLocales: AppLocalizations.supportedLocales,
+      // locale: Provider.of<LocaleProvider>(context).locale,
+      // supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
