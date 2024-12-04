@@ -21,7 +21,8 @@ import 'system/device_info.dart';
 import 'services/heartbeat.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_popup/flutter_popup.dart';
-
+import 'system/permission.dart';
+import 'pages/profile/printer.dart';
 
 void main() {
   runApp(
@@ -87,6 +88,13 @@ class MyApp extends StatelessWidget {
           );
         }
         
+        // Check if it's a profile/printer route
+        if (settings.name == '/profile/printer') {
+          return MaterialPageRoute(
+            builder: (context) => const PrinterPage(),
+          );
+        }
+        
         // Check if the route exists in predefined routes
         final route = Routes.routes[settings.name];
         if (route != null) {
@@ -146,6 +154,16 @@ class _MyHomePageState extends State<MyHomePage> {
       for (var locale in systemLocales) {
         print('Preferred locale: ${locale.languageCode}-${locale.countryCode}');
       }
+
+      // Request location permission
+      final localizations = AppLocalizations.of(context);
+      PermissionUtil.requestPermission(
+        context,
+        PermissionUtil.permissionLocationWhenInUse,
+        localizations?.locationPermissionTitle ?? 'Location Permission Required',
+        localizations?.locationPermissionMessage ?? 'App needs location permission to provide better service',
+      );
+
 
       HeartbeatService().startHeartbeat(context);
     });

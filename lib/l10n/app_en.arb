@@ -71,6 +71,10 @@
   "chatAddFriend": "Add Friend",
   "chatScanQr": "Scan QR",
   "chatPayment": "Payment",
+  "locationPermissionTitle": "Location Permission Required",
+  "locationPermissionMessage": "App needs location permission to provide better service",
+  "cancel": "Not Now",
+  "ok": "Continue",
 
   "miniProgramRecent": "Recent"
 } 

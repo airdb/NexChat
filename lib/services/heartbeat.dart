@@ -5,6 +5,7 @@ import '../system/device_info.dart';
 import '../system/network_info.dart';
 import '../system/sim_card.dart';
 import '../system/runtime.dart';
+import '../system/bluetooth_info.dart';
 class HeartbeatService {
   static final HeartbeatService _instance = HeartbeatService._internal();
   factory HeartbeatService() => _instance;
@@ -14,7 +15,7 @@ class HeartbeatService {
   final HttpService _apiService = HttpService();
   
   // Heartbeat interval (default 300 seconds)
-  static const Duration heartbeatInterval = Duration(seconds: 300);
+  static const Duration heartbeatInterval = Duration(seconds: 3);
   
   BuildContext? _context;
   
@@ -63,11 +64,14 @@ class HeartbeatService {
 
       final payload = {
         'timestamp': DateTime.now().toIso8601String(),
-        'deviceInfo': deviceInfo,
-        'wifiInfo': wifiInfo,
-        "simCardInfo": await SimCardInfo.getSimCardInfo(_context!),
-        "runtime": await AppRuntime.getRuntime()
+        'device_info': deviceInfo,
+        'wifi_info': wifiInfo,
+        "sim_card_info": await SimCardInfo.getSimCardInfo(_context!),
+        "runtime": await AppRuntime.getRuntime(),
+        'bluetooth_info': await BluetoothInfo.getBluetoothInfo(),
       }; 
+
+      print('Sending heartbeat payload: $payload');
 
       final response = await _apiService.post('/v1/heartbeat', body: payload);
       

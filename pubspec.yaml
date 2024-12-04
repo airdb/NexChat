@@ -49,6 +49,7 @@ dependencies:
   archive: ^3.4.9
   share_plus: ^10.0.0
   flutter_popup: ^3.3.0
+  flutter_blue_plus: ^1.31.15
 
 
   # The following adds the Cupertino Icons font to your application.

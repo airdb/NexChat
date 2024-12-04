@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PermissionUtil {
   // camera related
@@ -87,5 +88,90 @@ class PermissionUtil {
     }
     
     return false;
+  }
+
+  /// Request all bluetooth related permissions
+  static Future<bool> requestBluetoothPermissions(BuildContext context) async {
+    // First check and request location permission
+    final hasLocation = await requestPermission(
+      context,
+      permissionLocationWhenInUse,
+      '需要位置权限',
+      '蓝牙扫描功能需要位置权限才能正常使用',
+    );
+    if (!hasLocation) return false;
+
+    // Request bluetooth scan permission
+    final hasScan = await requestPermission(
+      context,
+      permissionBluetoothScan,
+      '需要蓝牙扫描权限',
+      '请允许应用使用蓝牙扫描功能以连接设备',
+    );
+    if (!hasScan) return false;
+
+    // Request bluetooth connect permission
+    final hasConnect = await requestPermission(
+      context,
+      permissionBluetoothConnect,
+      '需要蓝牙连接权限',
+      '请允许应用连接蓝牙设备',
+    );
+    if (!hasConnect) return false;
+
+    // Request bluetooth advertise permission
+    final hasAdvertise = await requestPermission(
+      context,
+      permissionBluetoothAdvertise,
+      '需要蓝牙广播权限',
+      '请允许应用使用蓝牙广播功能',
+    );
+    if (!hasAdvertise) return false;
+
+    return true;
+  }
+
+  static Future<void> checkBluetoothPermissionStatus() async {
+    final scanStatus = await permissionBluetoothScan.status;
+    final connectStatus = await permissionBluetoothConnect.status;
+    final advertiseStatus = await permissionBluetoothAdvertise.status;
+    final locationStatus = await permissionLocationWhenInUse.status;
+    
+    print('Bluetooth Scan: $scanStatus');
+    print('Bluetooth Connect: $connectStatus');
+    print('Bluetooth Advertise: $advertiseStatus');
+    print('Location: $locationStatus');
+  }
+
+  static Future<void> requestLocationPermission(BuildContext context) async {
+    final localizations = AppLocalizations.of(context);
+    
+    // First show explanation dialog
+    final bool shouldRequest = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(localizations?.locationPermissionTitle ?? 'Location Access'),
+        content: Text(localizations?.locationPermissionMessage ?? 'We need location access to:\n- Find nearby services\n- Provide location-based features\n- Improve your experience'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(localizations?.cancel ?? 'Not Now'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(localizations?.ok ?? 'Continue'),
+          ),
+        ],
+      ),
+    ) ?? false;
+
+    if (shouldRequest) {
+      await PermissionUtil.requestPermission(
+        context,
+        PermissionUtil.permissionLocationWhenInUse,
+        localizations?.locationPermissionTitle ?? 'Location Permission Required',
+        localizations?.locationPermissionMessage ?? 'App needs location permission to provide better service',
+      );
+    }
   }
 } 

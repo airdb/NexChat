@@ -89,5 +89,9 @@
 	<string>需要访问剪贴板以支持复制粘贴功能</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>我们需要使用Face ID来验证您的身份</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>需要使用蓝牙来收集设备信息</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>需要使用蓝牙来收集设备信息</string>
 </dict>
 </plist>

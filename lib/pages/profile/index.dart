@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nexchat/pages/profile/profile_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexchat/system/permission.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -102,6 +103,18 @@ class ProfilePage extends StatelessWidget {
             icon: Icons.emoji_emotions,
             iconColor: Colors.amber,
             title: l10n.profileStickerGallery,
+          ),
+          _buildMenuItem(
+            icon: Icons.print,
+            iconColor: Colors.purple,
+            title: "Printer",
+            onTap: () async {
+              final hasPermission = await PermissionUtil.requestBluetoothPermissions(context);
+              print("Debug: hasPermission: $hasPermission, context.mounted: ${context.mounted}");
+              if (hasPermission && context.mounted) {
+                Navigator.pushNamed(context, '/profile/printer');
+              }
+            },
           ),
           const SizedBox(height: 8),
           _buildMenuItem(
