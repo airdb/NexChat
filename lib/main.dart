@@ -117,13 +117,6 @@ class MyApp extends StatelessWidget {
         return null;
       },
       home: const MyHomePage(title: 'NexChat'),
-      routes: {
-        '/chat/index': (context) => const ChatPage(),
-        '/profile/order': (context) => const MyOrderPage(),
-        '/profile/payment_code': (context) => const PaymentCodePage(),
-        '/chat/mini_program': (context) => const ChatMiniProgramPage(),
-        '/chat/qr_scan_page': (context) => const QRScanPage(),
-      },
       // locale: Provider.of<LocaleProvider>(context).locale,
       // supportedLocales: AppLocalizations.supportedLocales,
     );

@@ -14,9 +14,19 @@ import '../pages/payment/history.dart';
 import '../pages/payment/add_card.dart';
 import '../pages/profile/device.dart';
 import '../pages/profile/nfc.dart';
+import '../pages/chat/index.dart';
+import '../pages/chat/chat_mini_program.dart';
+import '../pages/chat/mobile_scanner.dart';
+import '../pages/profile/payment_code_page.dart';
+
 
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
+    '/chat/index': (context) => const ChatPage(),
+    '/profile/order': (context) => const MyOrderPage(),
+    '/profile/payment_code': (context) => const PaymentCodePage(),
+    '/chat/mini_program': (context) => const ChatMiniProgramPage(),
+    '/chat/qr_scan_page': (context) => const QRScanPage(),
     '/chat': (context) => const ChatPage(),
     '/chat/index': (context) => const ChatPage(),
     '/contacts': (context) => const ContactPage(),
