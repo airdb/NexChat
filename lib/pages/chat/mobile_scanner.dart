@@ -245,91 +245,76 @@ class _QRScanPageState extends State<QRScanPage> {
 
   void identifyPaymentType(String code) {
     _isProcessing = false;
-    print('scan handle: ${code}');
+    print('Scanning QR Code: ${code}'); // 打印完整的二维码内容
 
-    if (code.contains('SG.PAYNOW')) {
-      // PayNow QR
+    try {
       Map<String, dynamic> parsedData = parseSGQR(code);
+      print('Parsed Data: $parsedData'); // 打印解析后的数据
       String? uen = extractUEN(parsedData["26"]);
+
+      // SG.PAYNOW
+      // SG.COM.NETS
+      String paymentType = code.contains('SG.PAYNOW') ? 'PAYNOW' : 'NETS';
 
       print('Payload Format Indicator: ${parsedData["00"]}');
       print('Point of Initiation Method: ${parsedData["01"]}');
-      print('Merchant Account(UEN): $uen');
+      print('Merchant Account: ${parsedData["26"]}');
       print('Currency: ${parsedData["53"]}');
       print('Amount: ${parsedData["54"]}');
       print('Merchant Name: ${parsedData["59"]}');
       print('Merchant City: ${parsedData["60"]}');
+
       if (Navigator.canPop(context)) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => QRPaymentPage(
               qrData: code,
-              paymentType: 'PAYNOW',
+              paymentType: paymentType,
               parsedData: parsedData,
               recipientName: parsedData["59"],
-              recipientId: uen,
+              recipientId: uen ?? parsedData["26"], // 如果无法提取UEN，使用完整的商户账号
             ),
           ),
         );
       }
-  } else if (code.startsWith('https://qr.alipay.com')) {
-    // Alipay QR
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
+    } catch (e) {
+      print('Error parsing QR code: $e'); // 打印任何解析错误
+      _isProcessing = false;
     }
-  } else if (code.startsWith('https://u.wechat.com')) {
-    // Weixin User QR
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-  } else if (code.startsWith('wxp://f2f6Ot7CKDr4Ia_4L_zMFVWzkkAN9ukglcumERxAHLVlowY')) {
-    // Weixin Pay
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-  } else {
-    // Default: URL (https://aridb.com/qr)
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-      }
-    }
-    _isProcessing = false;
   }
 
+  Map<String, dynamic> parseSGQR(String sgqrData) {
+    Map<String, dynamic> result = {};
 
-Map<String, dynamic> parseSGQR(String sgqrData) {
-  Map<String, dynamic> result = {};
+    RegExp regExp = RegExp(r'(\d{2})(\d{2})(.+)');
+    while (sgqrData.isNotEmpty) {
+      final match = regExp.matchAsPrefix(sgqrData);
+      if (match == null) break;
 
-  RegExp regExp = RegExp(r'(\d{2})(\d{2})(.+)');
-  while (sgqrData.isNotEmpty) {
-    final match = regExp.matchAsPrefix(sgqrData);
-    if (match == null) break;
+      String tag = match.group(1)!;
+      int length = int.parse(match.group(2)!);
+      String value = match.group(3)!.substring(0, length);
 
-    String tag = match.group(1)!;
-    int length = int.parse(match.group(2)!);
-    String value = match.group(3)!.substring(0, length);
+      // 存储解析结果
+      result[tag] = value;
 
-    // 存储解析结果
-    result[tag] = value;
-
-    // 截取剩余数据
-    sgqrData = match.group(3)!.substring(length);
-  }
+      // 截取剩余数据
+      sgqrData = match.group(3)!.substring(length);
+    }
 
     return result;
   }
 
-
   String? extractUEN(String merchantAccount) {
-  RegExp regExp = RegExp(r'02(\d{2})(.+)');
-  Match? match = regExp.firstMatch(merchantAccount);
+    RegExp regExp = RegExp(r'02(\d{2})(.+)');
+    Match? match = regExp.firstMatch(merchantAccount);
 
-  if (match != null) {
-    int length = int.parse(match.group(1)!); // 获取长度
-    String value = match.group(2)!.substring(0, length); // 提取值
-    return value;
-  }
+    if (match != null) {
+      int length = int.parse(match.group(1)!); // 获取长度
+      String value = match.group(2)!.substring(0, length); // 提取值
+      return value;
+    }
     return null; // 未找到时返回 null
   }
 
