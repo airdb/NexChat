@@ -134,17 +134,19 @@ class _PrinterPageState extends State<PrinterPage> {
                 style: TextStyle(color: Colors.grey),
               ),
             ),
-            ...devices.map((device) => ListTile(
-                  title: Text(device.name.isEmpty ? 'Unknown Device' : device.name),
-                  subtitle: Text(device.id.id),
-                  trailing: TextButton(
-                    onPressed: () => _disconnectDevice(device),
-                    child: const Text('断开连接', style: TextStyle(color: Colors.red)),
-                  ),
-                  onTap: () {
-                    // 处理已配对设备点击事件
-                  },
-                )),
+            ...devices
+                .where((device) => device.name.isNotEmpty)
+                .map((device) => ListTile(
+                      title: Text(device.name),
+                      subtitle: Text(device.id.id),
+                      trailing: TextButton(
+                        onPressed: () => _disconnectDevice(device),
+                        child: const Text('断开连接', style: TextStyle(color: Colors.red)),
+                      ),
+                      onTap: () {
+                        // 处理已配对设备点击事件
+                      },
+                    )),
           ],
           if (scanResults.isNotEmpty) ...[
             const Padding(
@@ -154,39 +156,36 @@ class _PrinterPageState extends State<PrinterPage> {
                 style: TextStyle(color: Colors.grey),
               ),
             ),
-            ...scanResults.map((result) => ListTile(
-                  title: Text(
-                    result.device.name.isEmpty
-                        ? 'Unknown Device'
-                        : result.device.name,
-                  ),
-                  subtitle: Text(result.device.id.id),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('${result.rssi} dBm'),
-                      const SizedBox(width: 8),
-                      TextButton(
-                        onPressed: connectingDevices[result.device.id.id] == true
-                            ? null
-                            : () => _connectToDevice(result.device),
-                        child: Text(
-                          connectingDevices[result.device.id.id] == true
-                              ? '连接中...'
-                              : '连接',
-                          style: TextStyle(
-                            color: connectingDevices[result.device.id.id] == true
-                                ? Colors.grey
-                                : Colors.blue,
+            ...scanResults
+                .where((result) => result.device.name.isNotEmpty)
+                .map((result) => ListTile(
+                      title: Text(result.device.name),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('${result.rssi} dBm'),
+                          const SizedBox(width: 8),
+                          TextButton(
+                            onPressed: connectingDevices[result.device.id.id] == true
+                                ? null
+                                : () => _connectToDevice(result.device),
+                            child: Text(
+                              connectingDevices[result.device.id.id] == true
+                                  ? '连接中...'
+                                  : '连接',
+                              style: TextStyle(
+                                color: connectingDevices[result.device.id.id] == true
+                                    ? Colors.grey
+                                    : Colors.blue,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                  onTap: () {
-                    // 处理扫描设备点击事件
-                  },
-                )),
+                      onTap: () {
+                        // 处理扫描设备点击事件
+                      },
+                    )),
           ],
         ],
       ),
