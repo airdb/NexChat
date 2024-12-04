@@ -12,6 +12,8 @@ import '../pages/profile/my_account.dart';
 import '../pages/explore/mini_program.dart';
 import '../pages/payment/history.dart';
 import '../pages/payment/add_card.dart';
+import '../pages/profile/device.dart';
+import '../pages/profile/nfc.dart';
 
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
@@ -37,5 +39,7 @@ class Routes {
     },
     '/payment/history': (context) => const PaymentHistoryPage(),
     '/payment/add-card': (context) => const AddCardPage(),
+    '/profile/device': (context) => const DeviceManagementPage(),
+    '/profile/nfc': (context) => const NFCPage(),
   };
 } 

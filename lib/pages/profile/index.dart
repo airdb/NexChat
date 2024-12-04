@@ -107,13 +107,9 @@ class ProfilePage extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.print,
             iconColor: Colors.purple,
-            title: "Printer",
-            onTap: () async {
-              bool hasPermission = await PermissionUtil.requestBluetoothPermissions(context);
-              hasPermission = true;
-              if (hasPermission) {
-                Navigator.pushNamed(context, '/profile/printer');
-              }
+            title: "Device Management",
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/device');
             },
           ),
           const SizedBox(height: 8),
